@@ -1,0 +1,169 @@
++ set -e
++ set -o pipefail
++ '[' -z /nfs/workloads/kind-slurm-integration/benchmark/ksi/workload-startup-time.sh ']'
++ '[' '!' -f /nfs/workloads/kind-slurm-integration/benchmark/ksi/workload-startup-time.sh ']'
+++ stat -fc %T /sys/fs/cgroup/
++ '[' cgroup2fs = cgroup2fs ']'
++ echo 'cgroups v2 check passed: cgroups v2 is enabled'
+cgroups v2 check passed: cgroups v2 is enabled
+++ which podman
+++ alias
+++ eval declare -f
++++ declare -f
+++ /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot podman
++ '[' -x /usr/bin/podman ']'
+podman check passed
++ echo 'podman check passed'
+++ which kubectl
+++ alias
+++ eval declare -f
++++ declare -f
+++ /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot kubectl
++ '[' -x /usr/local/bin/kubectl ']'
+kubectl check passed
++ echo 'kubectl check passed'
+++ which kind
+++ alias
+++ eval declare -f
++++ declare -f
+++ /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot kind
++ '[' -x /usr/local/bin/kind ']'
+kind check passed
++ echo 'kind check passed'
++ '[' -f /etc/os-release ']'
++ . /etc/os-release
+++ NAME='CentOS Stream'
+++ VERSION=9
+++ ID=centos
+++ ID_LIKE='rhel fedora'
+++ VERSION_ID=9
+++ PLATFORM_ID=platform:el9
+++ PRETTY_NAME='CentOS Stream 9'
+++ ANSI_COLOR='0;31'
+++ LOGO=fedora-logo-icon
+++ CPE_NAME=cpe:/o:centos:centos:9
+++ HOME_URL=https://centos.org/
+++ BUG_REPORT_URL=https://bugzilla.redhat.com/
+++ REDHAT_SUPPORT_PRODUCT='Red Hat Enterprise Linux 9'
+++ REDHAT_SUPPORT_PRODUCT_VERSION='CentOS Stream'
+Successfully read /etc/os-release
++ echo 'Successfully read /etc/os-release'
+++ uuidgen
+++ tr -d -
+++ head -c5
++ cluster_name=c2093
+++ random_unused_port
+++ local port
+++ (( port=30000 ))
+++ (( port<=32767 ))
+++ ss -Htan
+++ awk '{print $4}'
+++ cut -d: -f2
+++ grep 30000
+++ [[ 1 == 1 ]]
+++ echo 30000
+++ break
++ : 30000
++ export K8S_PORT=30000
++ K8S_PORT=30000
+K8S_PORT=30000
++ echo K8S_PORT=30000
++ trap cleanup EXIT
++ trap cleanup SIGTERM
++ trap cleanup SIGINT
++ echo 'Kind config:'
+Kind config:
++ envsubst
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+- role: control-plane
+  extraMounts:
+  - hostPath: ./
+    containerPath: /app
+  extraPortMappings:
+    - containerPort: 30000
+      hostPort: 30000
+      # optional: set the bind address on the host
+      # 0.0.0.0 is the current default
+      listenAddress: "0.0.0.0"
+      # optional: set the protocol to one of TCP, UDP, SCTP.
+      # TCP is the default
+      protocol: TCP
++ [[ CentOS Stream == \C\e\n\t\O\S\ \S\t\r\e\a\m ]]
++ [[ 9 = \8 ]]
++ envsubst
++ KIND_EXPERIMENTAL_PROVIDER=podman
++ kind create cluster --name c2093 --wait 5m --config -
+using podman due to KIND_EXPERIMENTAL_PROVIDER
+enabling experimental podman provider
+Creating cluster "c2093" ...
+ • Ensuring node image (kindest/node:v1.27.3) 🖼  ...
+ ✓ Ensuring node image (kindest/node:v1.27.3) 🖼
+ • Preparing nodes 📦   ...
+ ✓ Preparing nodes 📦 
+ • Writing configuration 📜  ...
+ ✓ Writing configuration 📜
+ • Starting control-plane 🕹️  ...
+ ✓ Starting control-plane 🕹️
+ • Installing CNI 🔌  ...
+ ✓ Installing CNI 🔌
+ • Installing StorageClass 💾  ...
+ ✓ Installing StorageClass 💾
+ • Waiting ≤ 5m0s for control-plane = Ready ⏳  ...
+ ✓ Waiting ≤ 5m0s for control-plane = Ready ⏳
+ • Ready after 14s 💚
+Set kubectl context to "kind-c2093"
+You can now use your cluster with:
+
+kubectl cluster-info --context kind-c2093
+
+Have a nice day! 👋
++ kubectl get nodes --context kind-c2093
+NAME                  STATUS   ROLES           AGE   VERSION
+c2093-control-plane   Ready    control-plane   19s   v1.27.3
++ kubectl cluster-info --context kind-c2093
+[0;32mKubernetes control plane[0m is running at [0;33mhttps://127.0.0.1:46435[0m
+[0;32mCoreDNS[0m is running at [0;33mhttps://127.0.0.1:46435/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy[0m
+
+To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
++ K8S_CLUSTER_NAME=kind-c2093
++ export K8S_CLUSTER_NAME=kind-c2093
++ K8S_CLUSTER_NAME=kind-c2093
+++ kubectl config view -o 'jsonpath={.clusters[?(@.name=='\''kind-c2093'\'')].cluster.server}'
++ K8S_CLUSTER_API=https://127.0.0.1:46435
++ export K8S_CLUSTER_API=https://127.0.0.1:46435
++ K8S_CLUSTER_API=https://127.0.0.1:46435
++ kubectl --context kind-c2093 create -f -
+serviceaccount/admin-user created
++ kubectl --context kind-c2093 create -f -
+clusterrolebinding.rbac.authorization.k8s.io/admin-user created
+++ kubectl --context kind-c2093 -n kube-system create token admin-user
++ K8S_CLUSTER_API_TOKEN=eyJhbGciOiJSUzI1NiIsImtpZCI6Il84T1JkSWM0b053YXctT2c0M0dOa3BmSHg2SEN2dnB2S2NULVhYY3J2U3MifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNjk5NjQ4NDMzLCJpYXQiOjE2OTk2NDQ4MzMsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsInNlcnZpY2VhY2NvdW50Ijp7Im5hbWUiOiJhZG1pbi11c2VyIiwidWlkIjoiNjAyMjEwNmMtNzY4ZS00YWQ1LWE5NGYtMzk1YWRlYzIwMDQwIn19LCJuYmYiOjE2OTk2NDQ4MzMsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlLXN5c3RlbTphZG1pbi11c2VyIn0.JdkcNXH58TdbdAE5saSPtfT0eV-_5B0ZSUxwVLRVLKPiUYXO9PCatcwn9KxfdjrYusIccqBaSieuZwlWE9eRKvVWYrrgNYIZeko129DTs529CUIaU3hmK6OdFETPq8hp6fxSYrFJiIgUtrL9A2RDvu44nBub-Lak8xg1_Qedp3idtW9_q1gxKbzCwGVQRloFIKPrCdCAvhD3DiLNYKAVjiG-GJEtZQFFO9oEbye2SE5e40baefiJVVKjONDSvovlBrBAakigx63xzjF4LtkXLjsW4LIS50Alg42rM7yTRlmdBh7Pl7uj66cDfntHWBf0TyySHQ1NTVH2x6JKchOlBA
++ export K8S_CLUSTER_API_TOKEN=eyJhbGciOiJSUzI1NiIsImtpZCI6Il84T1JkSWM0b053YXctT2c0M0dOa3BmSHg2SEN2dnB2S2NULVhYY3J2U3MifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNjk5NjQ4NDMzLCJpYXQiOjE2OTk2NDQ4MzMsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsInNlcnZpY2VhY2NvdW50Ijp7Im5hbWUiOiJhZG1pbi11c2VyIiwidWlkIjoiNjAyMjEwNmMtNzY4ZS00YWQ1LWE5NGYtMzk1YWRlYzIwMDQwIn19LCJuYmYiOjE2OTk2NDQ4MzMsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlLXN5c3RlbTphZG1pbi11c2VyIn0.JdkcNXH58TdbdAE5saSPtfT0eV-_5B0ZSUxwVLRVLKPiUYXO9PCatcwn9KxfdjrYusIccqBaSieuZwlWE9eRKvVWYrrgNYIZeko129DTs529CUIaU3hmK6OdFETPq8hp6fxSYrFJiIgUtrL9A2RDvu44nBub-Lak8xg1_Qedp3idtW9_q1gxKbzCwGVQRloFIKPrCdCAvhD3DiLNYKAVjiG-GJEtZQFFO9oEbye2SE5e40baefiJVVKjONDSvovlBrBAakigx63xzjF4LtkXLjsW4LIS50Alg42rM7yTRlmdBh7Pl7uj66cDfntHWBf0TyySHQ1NTVH2x6JKchOlBA
+Executing the Kubernetes workload script /nfs/workloads/kind-slurm-integration/benchmark/ksi/workload-startup-time.sh on cluster kind-c2093
++ K8S_CLUSTER_API_TOKEN=eyJhbGciOiJSUzI1NiIsImtpZCI6Il84T1JkSWM0b053YXctT2c0M0dOa3BmSHg2SEN2dnB2S2NULVhYY3J2U3MifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNjk5NjQ4NDMzLCJpYXQiOjE2OTk2NDQ4MzMsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsInNlcnZpY2VhY2NvdW50Ijp7Im5hbWUiOiJhZG1pbi11c2VyIiwidWlkIjoiNjAyMjEwNmMtNzY4ZS00YWQ1LWE5NGYtMzk1YWRlYzIwMDQwIn19LCJuYmYiOjE2OTk2NDQ4MzMsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlLXN5c3RlbTphZG1pbi11c2VyIn0.JdkcNXH58TdbdAE5saSPtfT0eV-_5B0ZSUxwVLRVLKPiUYXO9PCatcwn9KxfdjrYusIccqBaSieuZwlWE9eRKvVWYrrgNYIZeko129DTs529CUIaU3hmK6OdFETPq8hp6fxSYrFJiIgUtrL9A2RDvu44nBub-Lak8xg1_Qedp3idtW9_q1gxKbzCwGVQRloFIKPrCdCAvhD3DiLNYKAVjiG-GJEtZQFFO9oEbye2SE5e40baefiJVVKjONDSvovlBrBAakigx63xzjF4LtkXLjsW4LIS50Alg42rM7yTRlmdBh7Pl7uj66cDfntHWBf0TyySHQ1NTVH2x6JKchOlBA
++ echo 'Executing the Kubernetes workload script /nfs/workloads/kind-slurm-integration/benchmark/ksi/workload-startup-time.sh on cluster kind-c2093'
++ wait
++ /bin/bash /nfs/workloads/kind-slurm-integration/benchmark/ksi/workload-startup-time.sh
++ kubectl create --context kind-c2093 -f -
+++ date +%s%N
+++ cut -b1-13
+job.batch/millis created
++ kubectl wait --context kind-c2093 --for=condition=complete --timeout=10h job/millis
+job.batch/millis condition met
++ kubectl logs job/millis --context kind-c2093
+workload-start-millis 1699644833483
++ kubectl delete --context kind-c2093 job millis
+job.batch "millis" deleted
++ cleanup
++ echo 'Deleting Kind cluster container c2093'
+Deleting Kind cluster container c2093
++ [[ CentOS Stream == \C\e\n\t\O\S\ \S\t\r\e\a\m ]]
++ [[ 9 = \8 ]]
++ KIND_EXPERIMENTAL_PROVIDER=podman
++ kind delete cluster --name c2093
+using podman due to KIND_EXPERIMENTAL_PROVIDER
+enabling experimental podman provider
+Deleting cluster "c2093" ...
+Deleted nodes: ["c2093-control-plane"]

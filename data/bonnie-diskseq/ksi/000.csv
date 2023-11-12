@@ -1,0 +1,11 @@
+date;project;readthroughput;writethroughput
+2023-11-08T20:28:05+01:00;ksi;Deleted nodes: ["299ed-control-plane"];Deleted nodes: ["299ed-control-plane"]
+2023-11-08T20:29:18+01:00;ksi;Deleted nodes: ["3e170-control-plane"];Deleted nodes: ["3e170-control-plane"]
+2023-11-08T20:30:31+01:00;ksi;Deleted nodes: ["b1819-control-plane"];Deleted nodes: ["b1819-control-plane"]
+2023-11-08T20:31:42+01:00;ksi;Deleted nodes: ["e91b8-control-plane"];Deleted nodes: ["e91b8-control-plane"]
+2023-11-08T20:32:54+01:00;ksi;Deleted nodes: ["9510e-control-plane"];Deleted nodes: ["9510e-control-plane"]
+2023-11-08T20:34:06+01:00;ksi;Deleted nodes: ["69fe6-control-plane"];Deleted nodes: ["69fe6-control-plane"]
+2023-11-08T20:35:39+01:00;ksi;Deleted nodes: ["53537-control-plane"];Deleted nodes: ["53537-control-plane"]
+2023-11-08T20:37:01+01:00;ksi;Deleted nodes: ["09766-control-plane"];Deleted nodes: ["09766-control-plane"]
+2023-11-08T20:38:31+01:00;ksi;Deleted nodes: ["fa64a-control-plane"];Deleted nodes: ["fa64a-control-plane"]
+2023-11-08T20:39:58+01:00;ksi;Deleted nodes: ["c914d-control-plane"];Deleted nodes: ["c914d-control-plane"]

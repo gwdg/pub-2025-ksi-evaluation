@@ -1,0 +1,6 @@
+srun: job 296 queued and waiting for resources
+srun: job 296 has been allocated resources
+++ date +%s%N
+++ cut -b1-13
++ echo 'workload-start-millis 1699640478072'
+workload-start-millis 1699640478072

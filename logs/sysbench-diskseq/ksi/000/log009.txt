@@ -1,0 +1,269 @@
++ set -e
++ set -o pipefail
++ '[' -z /nfs/workloads/kind-slurm-integration/benchmark/ksi/workload-sysbench-diskseq.sh ']'
++ '[' '!' -f /nfs/workloads/kind-slurm-integration/benchmark/ksi/workload-sysbench-diskseq.sh ']'
+++ stat -fc %T /sys/fs/cgroup/
++ '[' cgroup2fs = cgroup2fs ']'
++ echo 'cgroups v2 check passed: cgroups v2 is enabled'
+cgroups v2 check passed: cgroups v2 is enabled
+++ which podman
+++ alias
+++ eval declare -f
++++ declare -f
+++ /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot podman
++ '[' -x /usr/bin/podman ']'
++ echo 'podman check passed'
+podman check passed
+++ which kubectl
+++ alias
+++ eval declare -f
++++ declare -f
+++ /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot kubectl
++ '[' -x /usr/local/bin/kubectl ']'
++ echo 'kubectl check passed'
+kubectl check passed
+++ which kind
+++ alias
+++ eval declare -f
++++ declare -f
+++ /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot kind
++ '[' -x /usr/local/bin/kind ']'
++ echo 'kind check passed'
+kind check passed
++ '[' -f /etc/os-release ']'
++ . /etc/os-release
+++ NAME='CentOS Stream'
+++ VERSION=9
+++ ID=centos
+++ ID_LIKE='rhel fedora'
+++ VERSION_ID=9
+++ PLATFORM_ID=platform:el9
+++ PRETTY_NAME='CentOS Stream 9'
+++ ANSI_COLOR='0;31'
+++ LOGO=fedora-logo-icon
+++ CPE_NAME=cpe:/o:centos:centos:9
+++ HOME_URL=https://centos.org/
+++ BUG_REPORT_URL=https://bugzilla.redhat.com/
+++ REDHAT_SUPPORT_PRODUCT='Red Hat Enterprise Linux 9'
+++ REDHAT_SUPPORT_PRODUCT_VERSION='CentOS Stream'
++ echo 'Successfully read /etc/os-release'
+Successfully read /etc/os-release
+++ uuidgen
+++ tr -d -
+++ head -c5
++ cluster_name=862d6
+++ random_unused_port
+++ local port
+++ (( port=30000 ))
+++ (( port<=32767 ))
+++ ss -Htan
+++ awk '{print $4}'
+++ cut -d: -f2
+++ grep 30000
+++ [[ 1 == 1 ]]
+++ echo 30000
+++ break
++ : 30000
++ export K8S_PORT=30000
++ K8S_PORT=30000
++ echo K8S_PORT=30000
+K8S_PORT=30000
++ trap cleanup EXIT
++ trap cleanup SIGTERM
++ trap cleanup SIGINT
++ echo 'Kind config:'
+Kind config:
++ envsubst
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+- role: control-plane
+  extraMounts:
+  - hostPath: ./
+    containerPath: /app
+  extraPortMappings:
+    - containerPort: 30000
+      hostPort: 30000
+      # optional: set the bind address on the host
+      # 0.0.0.0 is the current default
+      listenAddress: "0.0.0.0"
+      # optional: set the protocol to one of TCP, UDP, SCTP.
+      # TCP is the default
+      protocol: TCP
++ [[ CentOS Stream == \C\e\n\t\O\S\ \S\t\r\e\a\m ]]
++ [[ 9 = \8 ]]
++ envsubst
++ KIND_EXPERIMENTAL_PROVIDER=podman
++ kind create cluster --name 862d6 --wait 5m --config -
+using podman due to KIND_EXPERIMENTAL_PROVIDER
+enabling experimental podman provider
+Creating cluster "862d6" ...
+ • Ensuring node image (kindest/node:v1.27.3) 🖼  ...
+ ✓ Ensuring node image (kindest/node:v1.27.3) 🖼
+ • Preparing nodes 📦   ...
+ ✓ Preparing nodes 📦 
+ • Writing configuration 📜  ...
+ ✓ Writing configuration 📜
+ • Starting control-plane 🕹️  ...
+ ✓ Starting control-plane 🕹️
+ • Installing CNI 🔌  ...
+ ✓ Installing CNI 🔌
+ • Installing StorageClass 💾  ...
+ ✓ Installing StorageClass 💾
+ • Waiting ≤ 5m0s for control-plane = Ready ⏳  ...
+ ✓ Waiting ≤ 5m0s for control-plane = Ready ⏳
+ • Ready after 16s 💚
+Set kubectl context to "kind-862d6"
+You can now use your cluster with:
+
+kubectl cluster-info --context kind-862d6
+
+Thanks for using kind! 😊
++ kubectl get nodes --context kind-862d6
+NAME                  STATUS   ROLES           AGE   VERSION
+862d6-control-plane   Ready    control-plane   22s   v1.27.3
++ kubectl cluster-info --context kind-862d6
+[0;32mKubernetes control plane[0m is running at [0;33mhttps://127.0.0.1:44333[0m
+[0;32mCoreDNS[0m is running at [0;33mhttps://127.0.0.1:44333/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy[0m
+
+To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
++ K8S_CLUSTER_NAME=kind-862d6
++ export K8S_CLUSTER_NAME=kind-862d6
++ K8S_CLUSTER_NAME=kind-862d6
+++ kubectl config view -o 'jsonpath={.clusters[?(@.name=='\''kind-862d6'\'')].cluster.server}'
++ K8S_CLUSTER_API=https://127.0.0.1:44333
++ export K8S_CLUSTER_API=https://127.0.0.1:44333
++ K8S_CLUSTER_API=https://127.0.0.1:44333
++ kubectl --context kind-862d6 create -f -
+serviceaccount/admin-user created
++ kubectl --context kind-862d6 create -f -
+clusterrolebinding.rbac.authorization.k8s.io/admin-user created
+++ kubectl --context kind-862d6 -n kube-system create token admin-user
++ K8S_CLUSTER_API_TOKEN=eyJhbGciOiJSUzI1NiIsImtpZCI6ImlSZGZ3a19qRGtjdHJVN085N0MxSlF3dDhrbjRkWllLa1BzR1ZySWNfck0ifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNjk5NjM0NjU0LCJpYXQiOjE2OTk2MzEwNTQsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsInNlcnZpY2VhY2NvdW50Ijp7Im5hbWUiOiJhZG1pbi11c2VyIiwidWlkIjoiNzU0ZGNlODQtOGRiOC00NTkwLTg1NTItN2Q0YzhjNGM1ZWFiIn19LCJuYmYiOjE2OTk2MzEwNTQsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlLXN5c3RlbTphZG1pbi11c2VyIn0.rFduVTAU-TOgFAPeQOwpphhxMk1qUOd46snHsBnq5n-kccA27nhAKve4AGgpYhneB7aCpe-V8tjbDkyUE-vFpPk8fCBdb0i-raWK29kPniAbTu-N-C88gfrTq4UJRsyfxoYjVJSmVR9IHfdBcTaIIDkeGvkEGdTLpxX36UUJ7v7T5jHteAbsY6VeMqe7kRXVF-Witogl7fYMo7S8bGqnafqpT4Gjzp9im6gzxgVMpb85EQ5Kw2Pu4qyf3RqVw9V4OWuFW5Zt9fCUbCqivc6_ZKN_tfPup4Dp6gz2c594bd8AW5Hh02_AVpmnsRyY2upjuoGd6K3ijoEV02up2zTXAA
++ export K8S_CLUSTER_API_TOKEN=eyJhbGciOiJSUzI1NiIsImtpZCI6ImlSZGZ3a19qRGtjdHJVN085N0MxSlF3dDhrbjRkWllLa1BzR1ZySWNfck0ifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNjk5NjM0NjU0LCJpYXQiOjE2OTk2MzEwNTQsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsInNlcnZpY2VhY2NvdW50Ijp7Im5hbWUiOiJhZG1pbi11c2VyIiwidWlkIjoiNzU0ZGNlODQtOGRiOC00NTkwLTg1NTItN2Q0YzhjNGM1ZWFiIn19LCJuYmYiOjE2OTk2MzEwNTQsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlLXN5c3RlbTphZG1pbi11c2VyIn0.rFduVTAU-TOgFAPeQOwpphhxMk1qUOd46snHsBnq5n-kccA27nhAKve4AGgpYhneB7aCpe-V8tjbDkyUE-vFpPk8fCBdb0i-raWK29kPniAbTu-N-C88gfrTq4UJRsyfxoYjVJSmVR9IHfdBcTaIIDkeGvkEGdTLpxX36UUJ7v7T5jHteAbsY6VeMqe7kRXVF-Witogl7fYMo7S8bGqnafqpT4Gjzp9im6gzxgVMpb85EQ5Kw2Pu4qyf3RqVw9V4OWuFW5Zt9fCUbCqivc6_ZKN_tfPup4Dp6gz2c594bd8AW5Hh02_AVpmnsRyY2upjuoGd6K3ijoEV02up2zTXAA
++ K8S_CLUSTER_API_TOKEN=eyJhbGciOiJSUzI1NiIsImtpZCI6ImlSZGZ3a19qRGtjdHJVN085N0MxSlF3dDhrbjRkWllLa1BzR1ZySWNfck0ifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNjk5NjM0NjU0LCJpYXQiOjE2OTk2MzEwNTQsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsInNlcnZpY2VhY2NvdW50Ijp7Im5hbWUiOiJhZG1pbi11c2VyIiwidWlkIjoiNzU0ZGNlODQtOGRiOC00NTkwLTg1NTItN2Q0YzhjNGM1ZWFiIn19LCJuYmYiOjE2OTk2MzEwNTQsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlLXN5c3RlbTphZG1pbi11c2VyIn0.rFduVTAU-TOgFAPeQOwpphhxMk1qUOd46snHsBnq5n-kccA27nhAKve4AGgpYhneB7aCpe-V8tjbDkyUE-vFpPk8fCBdb0i-raWK29kPniAbTu-N-C88gfrTq4UJRsyfxoYjVJSmVR9IHfdBcTaIIDkeGvkEGdTLpxX36UUJ7v7T5jHteAbsY6VeMqe7kRXVF-Witogl7fYMo7S8bGqnafqpT4Gjzp9im6gzxgVMpb85EQ5Kw2Pu4qyf3RqVw9V4OWuFW5Zt9fCUbCqivc6_ZKN_tfPup4Dp6gz2c594bd8AW5Hh02_AVpmnsRyY2upjuoGd6K3ijoEV02up2zTXAA
+Executing the Kubernetes workload script /nfs/workloads/kind-slurm-integration/benchmark/ksi/workload-sysbench-diskseq.sh on cluster kind-862d6
++ echo 'Executing the Kubernetes workload script /nfs/workloads/kind-slurm-integration/benchmark/ksi/workload-sysbench-diskseq.sh on cluster kind-862d6'
++ wait
++ /bin/bash /nfs/workloads/kind-slurm-integration/benchmark/ksi/workload-sysbench-diskseq.sh
++ kubectl create --context kind-862d6 namespace bench
+namespace/bench created
++ kubectl create -n bench --context kind-862d6 -f -
+job.batch/sysbench created
++ kubectl wait --context kind-862d6 --for=condition=complete --timeout=10h job/sysbench -n bench
+job.batch/sysbench condition met
++ kubectl logs job/sysbench -n bench --context kind-862d6
+sysbench 1.0.20 (using bundled LuaJIT 2.1.0-beta2)
+
+4 files, 262144Kb each, 1024Mb total
+Creating files for the test...
+Extra file open flags: (none)
+Creating file test_file.0
+Creating file test_file.1
+Creating file test_file.2
+Creating file test_file.3
+1073741824 bytes written in 17.53 seconds (58.41 MiB/sec).
+sysbench 1.0.20 (using bundled LuaJIT 2.1.0-beta2)
+
+Running the test with following options:
+Number of threads: 1
+Initializing random number generator from current time
+
+
+Extra file open flags: (none)
+4 files, 256MiB each
+1GiB total file size
+Block size 16KiB
+Periodic FSYNC enabled, calling fsync() each 100 requests.
+Calling fsync() at the end of test, Enabled.
+Using synchronous I/O mode
+Doing sequential read test
+Initializing worker threads...
+
+Threads started!
+
+
+File operations:
+    reads/s:                      334733.88
+    writes/s:                     0.00
+    fsyncs/s:                     0.00
+
+Throughput:
+    read, MiB/s:                  5230.22
+    written, MiB/s:               0.00
+
+General statistics:
+    total time:                          10.0001s
+    total number of events:              3348017
+
+Latency (ms):
+         min:                                    0.00
+         avg:                                    0.00
+         max:                                    0.06
+         95th percentile:                        0.00
+         sum:                                 9427.07
+
+Threads fairness:
+    events (avg/stddev):           3348017.0000/0.00
+    execution time (avg/stddev):   9.4271/0.00
+
+sysbench 1.0.20 (using bundled LuaJIT 2.1.0-beta2)
+
+Running the test with following options:
+Number of threads: 1
+Initializing random number generator from current time
+
+
+Extra file open flags: (none)
+4 files, 256MiB each
+1GiB total file size
+Block size 16KiB
+Periodic FSYNC enabled, calling fsync() each 100 requests.
+Calling fsync() at the end of test, Enabled.
+Using synchronous I/O mode
+Doing sequential write (creation) test
+Initializing worker threads...
+
+Threads started!
+
+
+File operations:
+    reads/s:                      0.00
+    writes/s:                     7824.91
+    fsyncs/s:                     313.10
+
+Throughput:
+    read, MiB/s:                  0.00
+    written, MiB/s:               122.26
+
+General statistics:
+    total time:                          10.0430s
+    total number of events:              81741
+
+Latency (ms):
+         min:                                    0.00
+         avg:                                    0.12
+         max:                                  257.03
+         95th percentile:                        0.02
+         sum:                                 9988.82
+
+Threads fairness:
+    events (avg/stddev):           81741.0000/0.00
+    execution time (avg/stddev):   9.9888/0.00
+
+sysbench 1.0.20 (using bundled LuaJIT 2.1.0-beta2)
+
+Removing test files...
++ kubectl delete --context kind-862d6 namespace bench
+namespace "bench" deleted
++ cleanup
+Deleting Kind cluster container 862d6
++ echo 'Deleting Kind cluster container 862d6'
++ [[ CentOS Stream == \C\e\n\t\O\S\ \S\t\r\e\a\m ]]
++ [[ 9 = \8 ]]
++ KIND_EXPERIMENTAL_PROVIDER=podman
++ kind delete cluster --name 862d6
+using podman due to KIND_EXPERIMENTAL_PROVIDER
+enabling experimental podman provider
+Deleting cluster "862d6" ...
+Deleted nodes: ["862d6-control-plane"]

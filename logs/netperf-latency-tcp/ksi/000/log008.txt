@@ -1,0 +1,171 @@
++ set -e
++ set -o pipefail
++ '[' -z /nfs/workloads/kind-slurm-integration/benchmark/ksi/workload-netperf-latency-tcp.sh ']'
++ '[' '!' -f /nfs/workloads/kind-slurm-integration/benchmark/ksi/workload-netperf-latency-tcp.sh ']'
+++ stat -fc %T /sys/fs/cgroup/
++ '[' cgroup2fs = cgroup2fs ']'
++ echo 'cgroups v2 check passed: cgroups v2 is enabled'
+cgroups v2 check passed: cgroups v2 is enabled
+++ which podman
+++ alias
+++ eval declare -f
++++ declare -f
+++ /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot podman
++ '[' -x /usr/bin/podman ']'
+podman check passed
++ echo 'podman check passed'
+++ which kubectl
+++ alias
+++ eval declare -f
++++ declare -f
+++ /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot kubectl
++ '[' -x /usr/local/bin/kubectl ']'
+kubectl check passed
++ echo 'kubectl check passed'
+++ which kind
+++ alias
+++ eval declare -f
++++ declare -f
+++ /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot kind
++ '[' -x /usr/local/bin/kind ']'
+kind check passed
++ echo 'kind check passed'
++ '[' -f /etc/os-release ']'
++ . /etc/os-release
+++ NAME='CentOS Stream'
+++ VERSION=9
+++ ID=centos
+++ ID_LIKE='rhel fedora'
+++ VERSION_ID=9
+++ PLATFORM_ID=platform:el9
+++ PRETTY_NAME='CentOS Stream 9'
+++ ANSI_COLOR='0;31'
+++ LOGO=fedora-logo-icon
+++ CPE_NAME=cpe:/o:centos:centos:9
+++ HOME_URL=https://centos.org/
+++ BUG_REPORT_URL=https://bugzilla.redhat.com/
+++ REDHAT_SUPPORT_PRODUCT='Red Hat Enterprise Linux 9'
+++ REDHAT_SUPPORT_PRODUCT_VERSION='CentOS Stream'
++ echo 'Successfully read /etc/os-release'
+Successfully read /etc/os-release
+++ uuidgen
+++ tr -d -
+++ head -c5
++ cluster_name=b407f
+++ random_unused_port
+++ local port
+++ (( port=30000 ))
+++ (( port<=32767 ))
+++ ss -Htan
+++ awk '{print $4}'
+++ cut -d: -f2
+++ grep 30000
+++ [[ 1 == 1 ]]
+++ echo 30000
+++ break
++ : 30000
++ export K8S_PORT=30000
++ K8S_PORT=30000
+K8S_PORT=30000
++ echo K8S_PORT=30000
++ trap cleanup EXIT
++ trap cleanup SIGTERM
++ trap cleanup SIGINT
++ echo 'Kind config:'
+Kind config:
++ envsubst
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+- role: control-plane
+  extraMounts:
+  - hostPath: ./
+    containerPath: /app
+  extraPortMappings:
+    - containerPort: 30000
+      hostPort: 30000
+      # optional: set the bind address on the host
+      # 0.0.0.0 is the current default
+      listenAddress: "0.0.0.0"
+      # optional: set the protocol to one of TCP, UDP, SCTP.
+      # TCP is the default
+      protocol: TCP
++ [[ CentOS Stream == \C\e\n\t\O\S\ \S\t\r\e\a\m ]]
++ [[ 9 = \8 ]]
++ envsubst
++ KIND_EXPERIMENTAL_PROVIDER=podman
++ kind create cluster --name b407f --wait 5m --config -
+using podman due to KIND_EXPERIMENTAL_PROVIDER
+enabling experimental podman provider
+Creating cluster "b407f" ...
+ • Ensuring node image (kindest/node:v1.27.3) 🖼  ...
+ ✓ Ensuring node image (kindest/node:v1.27.3) 🖼
+ • Preparing nodes 📦   ...
+ ✓ Preparing nodes 📦 
+ • Writing configuration 📜  ...
+ ✓ Writing configuration 📜
+ • Starting control-plane 🕹️  ...
+ ✓ Starting control-plane 🕹️
+ • Installing CNI 🔌  ...
+ ✓ Installing CNI 🔌
+ • Installing StorageClass 💾  ...
+ ✓ Installing StorageClass 💾
+ • Waiting ≤ 5m0s for control-plane = Ready ⏳  ...
+ ✓ Waiting ≤ 5m0s for control-plane = Ready ⏳
+ • Ready after 17s 💚
+Set kubectl context to "kind-b407f"
+You can now use your cluster with:
+
+kubectl cluster-info --context kind-b407f
+
+Have a nice day! 👋
++ kubectl get nodes --context kind-b407f
+NAME                  STATUS   ROLES           AGE   VERSION
+b407f-control-plane   Ready    control-plane   23s   v1.27.3
++ kubectl cluster-info --context kind-b407f
+[0;32mKubernetes control plane[0m is running at [0;33mhttps://127.0.0.1:41065[0m
+[0;32mCoreDNS[0m is running at [0;33mhttps://127.0.0.1:41065/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy[0m
+
+To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
++ K8S_CLUSTER_NAME=kind-b407f
++ export K8S_CLUSTER_NAME=kind-b407f
++ K8S_CLUSTER_NAME=kind-b407f
+++ kubectl config view -o 'jsonpath={.clusters[?(@.name=='\''kind-b407f'\'')].cluster.server}'
++ K8S_CLUSTER_API=https://127.0.0.1:41065
++ export K8S_CLUSTER_API=https://127.0.0.1:41065
++ K8S_CLUSTER_API=https://127.0.0.1:41065
++ kubectl --context kind-b407f create -f -
+serviceaccount/admin-user created
++ kubectl --context kind-b407f create -f -
+clusterrolebinding.rbac.authorization.k8s.io/admin-user created
+++ kubectl --context kind-b407f -n kube-system create token admin-user
++ K8S_CLUSTER_API_TOKEN=eyJhbGciOiJSUzI1NiIsImtpZCI6IkdWcmVpOENZZkdPd2hqWlgtSkljSEhad2xDOEM5bnNVeU0xeEUzTWlKSzAifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNjk5ODE4OTA0LCJpYXQiOjE2OTk4MTUzMDQsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsInNlcnZpY2VhY2NvdW50Ijp7Im5hbWUiOiJhZG1pbi11c2VyIiwidWlkIjoiZDA5M2NjMDQtY2NlZS00MjVkLTk0NGItZDljZmQyZjZkZjgyIn19LCJuYmYiOjE2OTk4MTUzMDQsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlLXN5c3RlbTphZG1pbi11c2VyIn0.Gre9yxkwQpMLmfhmrgzU3F1vcjWvpHTJydJ9ZgqKlhxfiZ2YN56bc5zX7jb2rb-wKQWO-3-V0oGphgTdnC7OKWYowBlIZTXMdtq5tYmbMVxlEFA50xh8SiIcBORIaTEj0vA0B_htjEeOF1ZXjoZ7ZmKLnSADHvKjV9DhmNaGzxA3mKSNsujI_fd3IEWo2Ij6WFJhSUzZFG8WcgprzjpnnirhD0F6WuFoaEbjCsftfzSWcMVWRu3WrhjfeCHAZ6g8SDmViZ5L5YzYU7deiVPkLo7kRRxq69f4cqeJCCGHlGQziXNM6J3GourGuXEfIM7rIG_U7H27CEb4QEfBGIgcPA
++ export K8S_CLUSTER_API_TOKEN=eyJhbGciOiJSUzI1NiIsImtpZCI6IkdWcmVpOENZZkdPd2hqWlgtSkljSEhad2xDOEM5bnNVeU0xeEUzTWlKSzAifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNjk5ODE4OTA0LCJpYXQiOjE2OTk4MTUzMDQsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsInNlcnZpY2VhY2NvdW50Ijp7Im5hbWUiOiJhZG1pbi11c2VyIiwidWlkIjoiZDA5M2NjMDQtY2NlZS00MjVkLTk0NGItZDljZmQyZjZkZjgyIn19LCJuYmYiOjE2OTk4MTUzMDQsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlLXN5c3RlbTphZG1pbi11c2VyIn0.Gre9yxkwQpMLmfhmrgzU3F1vcjWvpHTJydJ9ZgqKlhxfiZ2YN56bc5zX7jb2rb-wKQWO-3-V0oGphgTdnC7OKWYowBlIZTXMdtq5tYmbMVxlEFA50xh8SiIcBORIaTEj0vA0B_htjEeOF1ZXjoZ7ZmKLnSADHvKjV9DhmNaGzxA3mKSNsujI_fd3IEWo2Ij6WFJhSUzZFG8WcgprzjpnnirhD0F6WuFoaEbjCsftfzSWcMVWRu3WrhjfeCHAZ6g8SDmViZ5L5YzYU7deiVPkLo7kRRxq69f4cqeJCCGHlGQziXNM6J3GourGuXEfIM7rIG_U7H27CEb4QEfBGIgcPA
++ K8S_CLUSTER_API_TOKEN=eyJhbGciOiJSUzI1NiIsImtpZCI6IkdWcmVpOENZZkdPd2hqWlgtSkljSEhad2xDOEM5bnNVeU0xeEUzTWlKSzAifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNjk5ODE4OTA0LCJpYXQiOjE2OTk4MTUzMDQsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsInNlcnZpY2VhY2NvdW50Ijp7Im5hbWUiOiJhZG1pbi11c2VyIiwidWlkIjoiZDA5M2NjMDQtY2NlZS00MjVkLTk0NGItZDljZmQyZjZkZjgyIn19LCJuYmYiOjE2OTk4MTUzMDQsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlLXN5c3RlbTphZG1pbi11c2VyIn0.Gre9yxkwQpMLmfhmrgzU3F1vcjWvpHTJydJ9ZgqKlhxfiZ2YN56bc5zX7jb2rb-wKQWO-3-V0oGphgTdnC7OKWYowBlIZTXMdtq5tYmbMVxlEFA50xh8SiIcBORIaTEj0vA0B_htjEeOF1ZXjoZ7ZmKLnSADHvKjV9DhmNaGzxA3mKSNsujI_fd3IEWo2Ij6WFJhSUzZFG8WcgprzjpnnirhD0F6WuFoaEbjCsftfzSWcMVWRu3WrhjfeCHAZ6g8SDmViZ5L5YzYU7deiVPkLo7kRRxq69f4cqeJCCGHlGQziXNM6J3GourGuXEfIM7rIG_U7H27CEb4QEfBGIgcPA
+Executing the Kubernetes workload script /nfs/workloads/kind-slurm-integration/benchmark/ksi/workload-netperf-latency-tcp.sh on cluster kind-b407f
++ echo 'Executing the Kubernetes workload script /nfs/workloads/kind-slurm-integration/benchmark/ksi/workload-netperf-latency-tcp.sh on cluster kind-b407f'
++ wait
++ /bin/bash /nfs/workloads/kind-slurm-integration/benchmark/ksi/workload-netperf-latency-tcp.sh
++ kubectl create --context kind-b407f namespace bench
+namespace/bench created
++ kubectl create -n bench --context kind-b407f -f -
+job.batch/netperf created
++ kubectl wait --context kind-b407f --for=condition=complete --timeout=10h job/netperf -n bench
+job.batch/netperf condition met
++ kubectl logs job/netperf -n bench --context kind-b407f
+MIGRATED TCP REQUEST/RESPONSE TEST from 0.0.0.0 (0.0.0.0) port 0 AF_INET to 10.10.41.11 () port 0 AF_INET : demo : first burst 0
+Minimum Latency Microseconds,Maximum Latency Microseconds,Mean Latency Microseconds,Stddev Latency Microseconds
+71,511,80.88,7.56
++ kubectl delete --context kind-b407f namespace bench
+namespace "bench" deleted
++ cleanup
+Deleting Kind cluster container b407f
++ echo 'Deleting Kind cluster container b407f'
++ [[ CentOS Stream == \C\e\n\t\O\S\ \S\t\r\e\a\m ]]
++ [[ 9 = \8 ]]
++ KIND_EXPERIMENTAL_PROVIDER=podman
++ kind delete cluster --name b407f
+using podman due to KIND_EXPERIMENTAL_PROVIDER
+enabling experimental podman provider
+Deleting cluster "b407f" ...
+Deleted nodes: ["b407f-control-plane"]

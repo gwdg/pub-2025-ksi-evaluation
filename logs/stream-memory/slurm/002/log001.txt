@@ -1,0 +1,39 @@
++ cd /nfs/workloads/slurm/docker-stream
++ export ARRAYSIZE=1000000000
++ ARRAYSIZE=1000000000
++ export THREADS=56
++ THREADS=56
++ /bin/sh stream.sh
+-------------------------------------------------------------
+STREAM version $Revision: 5.10 $
+-------------------------------------------------------------
+This system uses 8 bytes per array element.
+-------------------------------------------------------------
+Array size = 1000000000 (elements), Offset = 0 (elements)
+Memory per array = 7629.4 MiB (= 7.5 GiB).
+Total memory required = 22888.2 MiB (= 22.4 GiB).
+Each kernel will be executed 10 times.
+ The *best* time for each kernel (excluding the first iteration)
+ will be used to compute the reported bandwidth.
+-------------------------------------------------------------
+Number of Threads requested = 56
+Number of Threads counted = 56
+-------------------------------------------------------------
+Your clock granularity/precision appears to be 1 microseconds.
+Each test below will take on the order of 184878 microseconds.
+   (= 184878 clock ticks)
+Increase the size of the arrays if this shows that
+you are not getting at least 20 clock ticks per test.
+-------------------------------------------------------------
+WARNING -- The above is only a rough guideline.
+For best results, please be sure you know the
+precision of your system timer.
+-------------------------------------------------------------
+Function    Best Rate MB/s  Avg time     Min time     Max time
+Copy:           88960.0     0.180131     0.179856     0.180434
+Scale:          59558.6     0.272690     0.268643     0.275372
+Add:            66356.6     0.364348     0.361682     0.366026
+Triad:          66766.1     0.362253     0.359464     0.363677
+-------------------------------------------------------------
+Solution Validates: avg error less than 1.000000e-13 on all three arrays
+-------------------------------------------------------------
