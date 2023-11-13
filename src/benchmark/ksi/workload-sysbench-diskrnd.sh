@@ -1,5 +1,8 @@
 #!/bin/bash
+# Source: https://www.alibabacloud.com/blog/testing-io-performance-with-sysbench_594709
 # Performs read and write test separately.
+
+# --file-extra-flags=direct => the file reading and writing mode is changed to direct. FileIO is done directly from user space buffers. See O_DIRECT: https://www.man7.org/linux/man-pages/man2/open.2.html
 # Using volume, because without volume the container storage seems to only exist in memory.
 
 set -x # Print each command before execution
@@ -23,8 +26,8 @@ spec:
           cd /app \
           && mkdir -p tmp && cd tmp \
           && sysbench fileio --file-total-size=1G --file-num=128 prepare \
-          && sysbench fileio --file-total-size=1G --file-num=128 --file-test-mode=rndrd --max-requests=0 run \
-          && sysbench fileio --file-total-size=1G --file-num=128 --file-test-mode=rndwr --max-requests=0 run \
+          && sysbench fileio --file-total-size=1G --file-num=128 --file-test-mode=rndrd --max-requests=0 --file-extra-flags=direct run \
+          && sysbench fileio --file-total-size=1G --file-num=128 --file-test-mode=rndwr --max-requests=0 --file-extra-flags=direct run \
           && sysbench fileio cleanup
         image: zyclonite/sysbench
         name: sysbench

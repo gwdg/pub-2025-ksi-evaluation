@@ -1,8 +1,9 @@
 #!/bin/bash
+# Source: https://www.alibabacloud.com/blog/testing-io-performance-with-sysbench_594709
+
 set -x # Print each command before execution
 
-#FIXME seq read relies on buffering
-
+# --file-extra-flags=direct => the file reading and writing mode is changed to direct. FileIO is done directly from user space buffers. See O_DIRECT: https://www.man7.org/linux/man-pages/man2/open.2.html
 # Using volume, because without volume the container storage seems to only exist in memory.
 
 kubectl create --context "$K8S_CLUSTER_NAME" namespace bench
@@ -24,8 +25,8 @@ spec:
           cd /app \
           && mkdir -p tmp && cd tmp \
           && sysbench fileio --file-total-size=1G --file-num=4 prepare \
-          && sysbench fileio --file-total-size=1G --file-num=4 --file-test-mode=seqrd run \
-          && sysbench fileio --file-total-size=1G --file-num=4 --file-test-mode=seqwr run \
+          && sysbench fileio --file-total-size=1G --file-num=4 --file-test-mode=seqrd --file-extra-flags=direct run \
+          && sysbench fileio --file-total-size=1G --file-num=4 --file-test-mode=seqwr --file-extra-flags=direct run \
           && sysbench fileio cleanup
         image: zyclonite/sysbench
         name: sysbench
