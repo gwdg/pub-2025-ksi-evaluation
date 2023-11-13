@@ -14,14 +14,14 @@ In this repository, the following projects are subject of our evaluation:
 
 In our evaluation we used the following benchmark tools to evaluate certain metrics:
 
-| Metric                 | Benchmarks                                             |
-|------------------------|--------------------------------------------------------|
-| CPU performance        | Sysbench CPU                                           |
-| Memory throughput      | [Stream](https://github.com/soerenmetje/docker-stream) |
-| Disk throughput        | Sysbench FileIO (rnd / seq)                            |
-| Network throughput     | Iperf3                                                 |
-| Network latency        | Netperf                                                |
-| Workload start up time | our own approach                                       |
+| Metric                 | Benchmark                   | Version       |
+|------------------------|-----------------------------|---------------|
+| CPU performance        | Sysbench CPU                | 1.0.20        |
+| Memory throughput      | Stream                      | 5.10          |
+| Storage throughput     | Sysbench FileIO (rnd / seq) | 1.0.20        |
+| Network throughput     | Iperf3                      | 3.9           |
+| Network latency        | Netperf                     | 2.7.1         |
+| Workload start up time | Our own approach            | not versioned |
 
 > Unfortunately, the tool Nuttcp seems to have no package for CentOS Stream 9. 
 > Therefore, instead of compiling Nuttcp on our own, we simply use Iperf3 that serves the same functionality.
