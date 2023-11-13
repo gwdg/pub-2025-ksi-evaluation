@@ -55,8 +55,9 @@ function parseLogFile() {
     workloadStartMillis=$(grep "workload-start-millis" "$fileLog" | tail -n 1 | awk '{print $2}')
     delayMillis=$((workloadStartMillis - START_MILLIS))
     echo "$datetime;$PROJECT;$delayMillis"
+
   else
-    # TODO Add further benchmarks
+    echo "No benchmark found for '$BENCHMARK'" >&2
     exit 1
   fi
 }
@@ -78,8 +79,8 @@ function initResultFile() {
     echo "date;project;min_latency;max_latency;mean_latency;stddev_latency"
   elif [ "$BENCHMARK" == "startup-time" ]; then
     echo "date;project;millis"
-    # TODO Add further benchmarks
   else
+    echo "No benchmark found for '$BENCHMARK'" >&2
     exit 1
   fi
 }
