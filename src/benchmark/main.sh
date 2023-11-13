@@ -105,5 +105,12 @@ else
   exit 1
 fi
 
-# TODO Run plotting python script dep. on Benchmark
-
+# Run plotting python script depending on Benchmark
+echo "Creating / updating plots..."
+plotScriptFile="src/plot/plot-$BENCHMARK.py"
+if [ -f "$plotScriptFile" ]; then
+  python3 "$plotScriptFile" && echo "Successfully created / updated plot for $BENCHMARK"
+else
+  echo "No plotting python script available for benchmark '$BENCHMARK'" >&2
+  exit 1
+fi
