@@ -1,5 +1,7 @@
 #!/bin/bash
-# Docs: https://docs.nvidia.com/networking-ethernet-software/knowledge-base/Configuration-and-Usage/Monitoring/Throughput-Testing-and-Troubleshooting/
+# Docs:
+# - https://iperf.fr/iperf-doc.php#3doc
+# - https://docs.nvidia.com/networking-ethernet-software/knowledge-base/Configuration-and-Usage/Monitoring/Throughput-Testing-and-Troubleshooting/
 
 set -x # Print each command before execution
 
