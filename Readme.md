@@ -41,7 +41,8 @@ In our evaluation we used the following benchmark tools to evaluate certain metr
 ## Prerequisites
 To perform the evaluation, a certain prerequisites have to be ensured:
 - Slurm cluster up and running
-- Local machine (e.g. laptop) that runs the benchmarks can log in on the Slurm master node using SSH and the SSH key `.ssh/id_rsa`
+- Local machine (e.g. laptop) runs a Linux distribution. We tested this setup using Ubuntu 22.04.
+- Local machine (e.g. laptop) can log in on the Slurm master node using SSH and the SSH key `.ssh/id_rsa`
 - All prerequisites of all projects (KSI, HPK, Bridge-Operator) are ensured
 - For Slurm and Bridge-Operator benchmarks, the benchmark tools has to be installed on the cluster nodes. KSI and HPK use container images and therefore do not rely on installed software.
 
