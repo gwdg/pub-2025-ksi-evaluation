@@ -28,7 +28,7 @@ print(df)
 sns.set_theme(style="whitegrid")
 chart = sns.barplot(data=df[["project", "millis"]], hue="project", palette="flare", x="project", y="millis",
                     estimator=np.mean, errorbar='sd', capsize=.1, alpha=0.85)
-chart.set(xlabel='Integration Approach', ylabel='Startup Time  [ms]\nhigher is better')
+chart.set(xlabel='Integration Approach', ylabel='Startup Time  [ms]\nlower is better')
 
 for i in chart.containers:
     chart.bar_label(i, label_type="center", fmt="%.0f")
