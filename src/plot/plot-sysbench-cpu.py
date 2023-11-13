@@ -6,6 +6,10 @@ import matplotlib.pyplot as plt
 
 benchmark = "sysbench-cpu"
 
+# If script is executed from plot directory, change to content root directory
+if os.path.split(os.getcwd())[-1] == "plot":
+    os.chdir("../..")
+
 # Read data
 plot_path = f"plots/plot-{benchmark}.jpg"
 
