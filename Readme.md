@@ -77,6 +77,19 @@ The available benchmarks can be determined by the file names `workload-*.sh` ins
 - `iperf3-bandwidth`
 - `startup-time`
 
+### IPerf 3 and Netperf
+The tools IPerf 3 and Netperf operate in a client-server model. 
+Therefore, in this setup it is required that the server component is **started manually** on a second node in the Slurm cluster.
+
+In case of iPerf 3 the server can be started by following command:
+```shell
+iperf3 -s -p 5003
+```
+
+For the Netperf server you can run:
+```shell
+netserver -p 16604
+```
 
 ## Notes
 - For testing we disabled writing caching as described here: https://stackoverflow.com/questions/20215516/disabling-disk-cache-in-linux/20215603#20215603
