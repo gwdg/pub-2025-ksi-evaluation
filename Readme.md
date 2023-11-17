@@ -77,6 +77,28 @@ The available benchmarks can be determined by the file names `workload-*.sh` ins
 - `iperf3-bandwidth`
 - `startup-time`
 
+The benchmarks `sysbench-diskrnd`, `sysbench-diskseq`, `netperf-latency-tcp`, and `iperf3-bandwidth`,  require manual actions on the slurm cluster before they are executed. This is covered in the following sections.
+
+### Sysbench Disk
+The Sysbench fileio benchmarks heavily depend on the available RAM. 
+If more RAM is available than is used as file size in the benchmark, 
+usually Linux caches these files. 
+As a result, the benchmark measures higher throughputs than are practically possible regarding storage device throughput. 
+For reference: typical SATA 3 SSDs suppy 480 MB/s sequential read throughput.
+
+A solution is to limit the available RAM during the benchmark by utilizing the tool mem-eater. 
+Essentially, this tool allocates RAM until a desired amount of RAM is left. This limits Linux's capabilities to cache the files during the benchmark. 
+We provide the sourcecode for mem-eater in [src/benchmark/common/mem-eater.c](src/benchmark/common/mem-eater.c). 
+Start mem-eater **manually** before running the Sysbench Disk benchmarks. 
+Regarding the desired RAM, it is a good rule of thumb to choose to benchmark the total filesize that is at least 4 times the available RAM - e.g. 8GiB files for 2GiB RAM.
+```shell
+# Compile
+gcc -o mem-eater mem-eater.c
+
+# Run ./mem-eater <desiredRamInMiB>
+./mem-eater 2048
+```
+
 ### IPerf 3 and Netperf
 The tools IPerf 3 and Netperf operate in a client-server model. 
 Therefore, in this setup it is required that the server component is **started manually** on a second node in the Slurm cluster.

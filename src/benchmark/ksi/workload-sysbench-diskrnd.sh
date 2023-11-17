@@ -25,9 +25,9 @@ spec:
         - |
           cd /app \
           && mkdir -p tmp && cd tmp \
-          && sysbench fileio --file-total-size=1G --file-num=128 prepare \
-          && sysbench fileio --file-total-size=1G --file-num=128 --file-test-mode=rndrd --max-requests=0 --file-block-size=256K --file-extra-flags=direct run \
-          && sysbench fileio --file-total-size=1G --file-num=128 --file-test-mode=rndwr --max-requests=0 --file-block-size=256K --file-extra-flags=direct run \
+          && sysbench fileio --file-total-size=8G --file-num=128 prepare \
+          && sysbench fileio --file-total-size=8G --file-num=128 --file-test-mode=rndrd --max-requests=0 --file-block-size=256K run \
+          && sysbench fileio --file-total-size=8G --file-num=128 --file-test-mode=rndwr --max-requests=0 --file-block-size=256K run \
           && sysbench fileio cleanup
         image: zyclonite/sysbench
         name: sysbench
