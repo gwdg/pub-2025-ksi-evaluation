@@ -4,6 +4,8 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+from src.plot import common
+
 benchmark = "startup-time"
 
 # If script is executed from plot directory, change to content root directory
@@ -14,13 +16,14 @@ if os.path.split(os.getcwd())[-1] == "plot":
 plot_path = f"plots/plot-{benchmark}.jpg"
 
 data_dir = f"data/{benchmark}"
-project_dirs = [os.path.join(data_dir, p) for p in ["bridge-operator", "hpk", "ksi", "slurm"]]
+project_dirs = [os.path.join(data_dir, p) for p in ["slurm", "bridge-operator", "hpk", "ksi"]]
 
 # Find file with the highest number
 benchmark_files = [os.path.join(d, max(os.listdir(d))) for d in project_dirs if os.path.exists(d)]
 print(benchmark_files)
 
 df = pd.concat([pd.read_csv(p, sep=";") for p in benchmark_files])
+df["project"] = common.map_approach_name(df["project"])
 print(df)
 
 # Plot data
