@@ -1,0 +1,235 @@
++ set -e
++ set -o pipefail
++ '[' -z /nfs/workloads/kind-slurm-integration/benchmark/ksi/workload-fio-diskseq.sh ']'
++ '[' '!' -f /nfs/workloads/kind-slurm-integration/benchmark/ksi/workload-fio-diskseq.sh ']'
+++ stat -fc %T /sys/fs/cgroup/
++ '[' cgroup2fs = cgroup2fs ']'
++ echo 'cgroups v2 check passed: cgroups v2 is enabled'
+cgroups v2 check passed: cgroups v2 is enabled
+++ which podman
+++ alias
+++ eval declare -f
++++ declare -f
+++ /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot podman
++ '[' -x /usr/bin/podman ']'
+podman check passed
++ echo 'podman check passed'
+++ which kubectl
+++ alias
+++ eval declare -f
++++ declare -f
+++ /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot kubectl
++ '[' -x /usr/local/bin/kubectl ']'
+kubectl check passed
++ echo 'kubectl check passed'
+++ which kind
+++ alias
+++ eval declare -f
++++ declare -f
+++ /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot kind
++ '[' -x /usr/local/bin/kind ']'
+kind check passed
++ echo 'kind check passed'
++ '[' -f /etc/os-release ']'
++ . /etc/os-release
+++ NAME='CentOS Stream'
+++ VERSION=9
+++ ID=centos
+++ ID_LIKE='rhel fedora'
+++ VERSION_ID=9
+++ PLATFORM_ID=platform:el9
+++ PRETTY_NAME='CentOS Stream 9'
+++ ANSI_COLOR='0;31'
+++ LOGO=fedora-logo-icon
+++ CPE_NAME=cpe:/o:centos:centos:9
+++ HOME_URL=https://centos.org/
+++ BUG_REPORT_URL=https://bugzilla.redhat.com/
+++ REDHAT_SUPPORT_PRODUCT='Red Hat Enterprise Linux 9'
+++ REDHAT_SUPPORT_PRODUCT_VERSION='CentOS Stream'
+Successfully read /etc/os-release
++ echo 'Successfully read /etc/os-release'
+++ uuidgen
+++ tr -d -
+++ head -c5
++ cluster_name=a2e3b
+++ random_unused_port
+++ local port
+++ (( port=30000 ))
+++ (( port<=32767 ))
+++ ss -Htan
+++ awk '{print $4}'
+++ cut -d: -f2
+++ grep 30000
+++ [[ 1 == 1 ]]
+++ echo 30000
+++ break
++ : 30000
++ export K8S_PORT=30000
++ K8S_PORT=30000
+K8S_PORT=30000
++ echo K8S_PORT=30000
++ trap cleanup EXIT
++ trap cleanup SIGTERM
++ trap cleanup SIGINT
+Kind config:
++ echo 'Kind config:'
++ envsubst
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+- role: control-plane
+  extraMounts:
+  - hostPath: ./
+    containerPath: /app
+  extraPortMappings:
+    - containerPort: 30000
+      hostPort: 30000
+      # optional: set the bind address on the host
+      # 0.0.0.0 is the current default
+      listenAddress: "0.0.0.0"
+      # optional: set the protocol to one of TCP, UDP, SCTP.
+      # TCP is the default
+      protocol: TCP
++ [[ CentOS Stream == \C\e\n\t\O\S\ \S\t\r\e\a\m ]]
++ [[ 9 = \8 ]]
++ envsubst
++ KIND_EXPERIMENTAL_PROVIDER=podman
++ kind create cluster --name a2e3b --wait 5m --config -
+using podman due to KIND_EXPERIMENTAL_PROVIDER
+enabling experimental podman provider
+Creating cluster "a2e3b" ...
+ • Ensuring node image (kindest/node:v1.27.3) 🖼  ...
+ ✓ Ensuring node image (kindest/node:v1.27.3) 🖼
+ • Preparing nodes 📦   ...
+ ✓ Preparing nodes 📦 
+ • Writing configuration 📜  ...
+ ✓ Writing configuration 📜
+ • Starting control-plane 🕹️  ...
+ ✓ Starting control-plane 🕹️
+ • Installing CNI 🔌  ...
+ ✓ Installing CNI 🔌
+ • Installing StorageClass 💾  ...
+ ✓ Installing StorageClass 💾
+ • Waiting ≤ 5m0s for control-plane = Ready ⏳  ...
+ ✓ Waiting ≤ 5m0s for control-plane = Ready ⏳
+ • Ready after 9s 💚
+Set kubectl context to "kind-a2e3b"
+You can now use your cluster with:
+
+kubectl cluster-info --context kind-a2e3b
+
+Thanks for using kind! 😊
++ kubectl get nodes --context kind-a2e3b
+NAME                  STATUS   ROLES           AGE   VERSION
+a2e3b-control-plane   Ready    control-plane   20s   v1.27.3
++ kubectl cluster-info --context kind-a2e3b
+[0;32mKubernetes control plane[0m is running at [0;33mhttps://127.0.0.1:36655[0m
+[0;32mCoreDNS[0m is running at [0;33mhttps://127.0.0.1:36655/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy[0m
+
+To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
++ K8S_CLUSTER_NAME=kind-a2e3b
++ export K8S_CLUSTER_NAME=kind-a2e3b
++ K8S_CLUSTER_NAME=kind-a2e3b
+++ kubectl config view -o 'jsonpath={.clusters[?(@.name=='\''kind-a2e3b'\'')].cluster.server}'
++ K8S_CLUSTER_API=https://127.0.0.1:36655
++ export K8S_CLUSTER_API=https://127.0.0.1:36655
++ K8S_CLUSTER_API=https://127.0.0.1:36655
++ kubectl --context kind-a2e3b create -f -
+serviceaccount/admin-user created
++ kubectl --context kind-a2e3b create -f -
+clusterrolebinding.rbac.authorization.k8s.io/admin-user created
+++ kubectl --context kind-a2e3b -n kube-system create token admin-user
++ K8S_CLUSTER_API_TOKEN=eyJhbGciOiJSUzI1NiIsImtpZCI6IlVFQjV4cUp4bjBCdDBnRi1zTGZ4dkJFZkhyMlpQX2p3N3dTbF9iZzYwQ0UifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNzAwMzE3MDY0LCJpYXQiOjE3MDAzMTM0NjQsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsInNlcnZpY2VhY2NvdW50Ijp7Im5hbWUiOiJhZG1pbi11c2VyIiwidWlkIjoiNTljYzg3OWQtYTFhOC00MzYxLTkwNjMtNTBkMGIyMmUzODEzIn19LCJuYmYiOjE3MDAzMTM0NjQsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlLXN5c3RlbTphZG1pbi11c2VyIn0.dfcfTAcopa5gUvW83r_vn9Ihdtp3g7kwkVaoWFmwkaauJAzat49eSCTLT_45WN4rc3r3GkapMw3NwoV_XtjaBg4HRXWYM0Jyr_A_PlHOQGNmyg-VYSBz9ZfZoPeA27ac6piuF-Kl0CWdeBj7U48Z8vgVYy6GBjVbMW8XuwcXith94Te0pt9RO1xiNbIliHYXU8piV_qoS_n3cBPK0v60c-v6QQTxfsZOLCcLfq-3BQcdguIkUndz0DQVf8vwgh9DENzqvQYcHKl_Km67cDVhEbkwlbctcJ5co2xX1z8JZXVbC2_Z9G7iWoZcEKui6VCM05HcAsPH1ZhgUMiBEbePYg
++ export K8S_CLUSTER_API_TOKEN=eyJhbGciOiJSUzI1NiIsImtpZCI6IlVFQjV4cUp4bjBCdDBnRi1zTGZ4dkJFZkhyMlpQX2p3N3dTbF9iZzYwQ0UifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNzAwMzE3MDY0LCJpYXQiOjE3MDAzMTM0NjQsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsInNlcnZpY2VhY2NvdW50Ijp7Im5hbWUiOiJhZG1pbi11c2VyIiwidWlkIjoiNTljYzg3OWQtYTFhOC00MzYxLTkwNjMtNTBkMGIyMmUzODEzIn19LCJuYmYiOjE3MDAzMTM0NjQsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlLXN5c3RlbTphZG1pbi11c2VyIn0.dfcfTAcopa5gUvW83r_vn9Ihdtp3g7kwkVaoWFmwkaauJAzat49eSCTLT_45WN4rc3r3GkapMw3NwoV_XtjaBg4HRXWYM0Jyr_A_PlHOQGNmyg-VYSBz9ZfZoPeA27ac6piuF-Kl0CWdeBj7U48Z8vgVYy6GBjVbMW8XuwcXith94Te0pt9RO1xiNbIliHYXU8piV_qoS_n3cBPK0v60c-v6QQTxfsZOLCcLfq-3BQcdguIkUndz0DQVf8vwgh9DENzqvQYcHKl_Km67cDVhEbkwlbctcJ5co2xX1z8JZXVbC2_Z9G7iWoZcEKui6VCM05HcAsPH1ZhgUMiBEbePYg
++ K8S_CLUSTER_API_TOKEN=eyJhbGciOiJSUzI1NiIsImtpZCI6IlVFQjV4cUp4bjBCdDBnRi1zTGZ4dkJFZkhyMlpQX2p3N3dTbF9iZzYwQ0UifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNzAwMzE3MDY0LCJpYXQiOjE3MDAzMTM0NjQsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsInNlcnZpY2VhY2NvdW50Ijp7Im5hbWUiOiJhZG1pbi11c2VyIiwidWlkIjoiNTljYzg3OWQtYTFhOC00MzYxLTkwNjMtNTBkMGIyMmUzODEzIn19LCJuYmYiOjE3MDAzMTM0NjQsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlLXN5c3RlbTphZG1pbi11c2VyIn0.dfcfTAcopa5gUvW83r_vn9Ihdtp3g7kwkVaoWFmwkaauJAzat49eSCTLT_45WN4rc3r3GkapMw3NwoV_XtjaBg4HRXWYM0Jyr_A_PlHOQGNmyg-VYSBz9ZfZoPeA27ac6piuF-Kl0CWdeBj7U48Z8vgVYy6GBjVbMW8XuwcXith94Te0pt9RO1xiNbIliHYXU8piV_qoS_n3cBPK0v60c-v6QQTxfsZOLCcLfq-3BQcdguIkUndz0DQVf8vwgh9DENzqvQYcHKl_Km67cDVhEbkwlbctcJ5co2xX1z8JZXVbC2_Z9G7iWoZcEKui6VCM05HcAsPH1ZhgUMiBEbePYg
+Executing the Kubernetes workload script /nfs/workloads/kind-slurm-integration/benchmark/ksi/workload-fio-diskseq.sh on cluster kind-a2e3b
++ echo 'Executing the Kubernetes workload script /nfs/workloads/kind-slurm-integration/benchmark/ksi/workload-fio-diskseq.sh on cluster kind-a2e3b'
++ wait
++ /bin/bash /nfs/workloads/kind-slurm-integration/benchmark/ksi/workload-fio-diskseq.sh
++ kubectl create --context kind-a2e3b namespace bench
+namespace/bench created
++ kubectl create -n bench --context kind-a2e3b -f -
+job.batch/fio created
++ kubectl wait --context kind-a2e3b --for=condition=complete --timeout=10h job/fio -n bench
+job.batch/fio condition met
++ kubectl logs job/fio -n bench --context kind-a2e3b
+kube-fio-write: (g=0): rw=write, bs=(R) 256KiB-256KiB, (W) 256KiB-256KiB, (T) 256KiB-256KiB, ioengine=psync, iodepth=1
+fio-3.35
+Starting 1 process
+3;fio-3.35;kube-fio-write;0;0;0;0;0;0;0;0;0.000000;0.000000;0;0;0.000000;0.000000;1.000000%=0;5.000000%=0;10.000000%=0;20.000000%=0;30.000000%=0;40.000000%=0;50.000000%=0;60.000000%=0;70.000000%=0;80.000000%=0;90.000000%=0;95.000000%=0;99.000000%=0;99.500000%=0;99.900000%=0;99.950000%=0;99.990000%=0;0%=0;0%=0;0%=0;0;0;0.000000;0.000000;0;0;0.000000%;0.000000;0.000000;8388608;80532;314;104164;0;0;0.000000;0.000000;95;128003;3171.760159;7484.050274;1.000000%=96;5.000000%=98;10.000000%=99;20.000000%=101;30.000000%=110;40.000000%=116;50.000000%=121;60.000000%=150;70.000000%=185;80.000000%=6979;90.000000%=11730;95.000000%=16711;99.000000%=31850;99.500000%=39059;99.900000%=71827;99.950000%=120061;99.990000%=128450;0%=0;0%=0;0%=0;98;128011;3176.574862;7484.141622;2048;1111552;100.000000%;80620.307692;107285.780161;0.214085%;4.585077%;9654;2;11;100.0%;0.0%;0.0%;0.0%;0.0%;0.0%;0.0%;0.00%;0.00%;0.00%;0.00%;0.00%;12.42%;64.53%;0.59%;0.01%;0.01%;0.49%;0.11%;9.60%;9.81%;2.20%;0.15%;0.09%;0.00%;0.00%;0.00%;0.00%;0.00%;dm-0;1467;2780;0;0;39141;128365;167506;61.31%;slaves;30066;33605;2844;461;2444823;325242;2793083;92.61%;sda;30066;33605;2844;461;2444823;325242;2793083;92.61%
+
+kube-fio-write: (groupid=0, jobs=1): err= 0: pid=72: Sat Nov 18 13:19:40 2023
+  write: IOPS=314, BW=78.6MiB/s (82.5MB/s)(8192MiB/104164msec); 0 zone resets
+    clat (usec): min=95, max=128003, avg=3171.76, stdev=7484.05
+     lat (usec): min=98, max=128011, avg=3176.57, stdev=7484.14
+    clat percentiles (usec):
+     |  1.00th=[    97],  5.00th=[    99], 10.00th=[   100], 20.00th=[   102],
+     | 30.00th=[   111], 40.00th=[   117], 50.00th=[   122], 60.00th=[   151],
+     | 70.00th=[   186], 80.00th=[  6980], 90.00th=[ 11731], 95.00th=[ 16712],
+     | 99.00th=[ 31851], 99.50th=[ 39060], 99.90th=[ 71828], 99.95th=[120062],
+     | 99.99th=[128451]
+   bw (  KiB/s): min= 2048, max=1111552, per=100.00%, avg=80620.31, stdev=107285.78, samples=208
+   iops        : min=    8, max= 4342, avg=314.92, stdev=419.09, samples=208
+  lat (usec)   : 100=12.42%, 250=64.53%, 500=0.59%, 750=0.01%, 1000=0.01%
+  lat (msec)   : 2=0.49%, 4=0.11%, 10=9.60%, 20=9.81%, 50=2.20%
+  lat (msec)   : 100=0.15%, 250=0.09%
+  cpu          : usr=0.21%, sys=4.59%, ctx=9654, majf=2, minf=11
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=0,32768,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+
+Run status group 0 (all jobs):
+  WRITE: bw=78.6MiB/s (82.5MB/s), 78.6MiB/s-78.6MiB/s (82.5MB/s-82.5MB/s), io=8192MiB (8590MB), run=104164-104164msec
+
+Disk stats (read/write):
+    dm-0: ios=1467/2780, merge=0/0, ticks=39141/128365, in_queue=167506, util=61.31%, aggrios=30066/33605, aggrmerge=2844/461, aggrticks=2444823/325242, aggrin_queue=2793083, aggrutil=92.61%
+  sda: ios=30066/33605, merge=2844/461, ticks=2444823/325242, in_queue=2793083, util=92.61%
+kube-fio-read: (g=0): rw=read, bs=(R) 256KiB-256KiB, (W) 256KiB-256KiB, (T) 256KiB-256KiB, ioengine=psync, iodepth=1
+fio-3.35
+Starting 1 process
+3;fio-3.35;kube-fio-read;0;0;8388608;234744;916;35735;0;0;0.000000;0.000000;23;483216;1089.948661;9890.356630;1.000000%=25;5.000000%=27;10.000000%=29;20.000000%=33;30.000000%=36;40.000000%=38;50.000000%=39;60.000000%=42;70.000000%=46;80.000000%=56;90.000000%=68;95.000000%=3653;99.000000%=18743;99.500000%=36962;99.900000%=141557;99.950000%=227540;99.990000%=350224;0%=0;0%=0;0%=0;23;483216;1090.012932;9890.354671;16384;442368;99.510357%;233594.591549;149749.514943;0;0;0;0;0;0;0.000000;0.000000;0;0;0.000000;0.000000;1.000000%=0;5.000000%=0;10.000000%=0;20.000000%=0;30.000000%=0;40.000000%=0;50.000000%=0;60.000000%=0;70.000000%=0;80.000000%=0;90.000000%=0;95.000000%=0;99.000000%=0;99.500000%=0;99.900000%=0;99.950000%=0;99.990000%=0;0%=0;0%=0;0%=0;0;0;0.000000;0.000000;0;0;0.000000%;0.000000;0.000000;0.120334%;7.021324%;5022;0;222;100.0%;0.0%;0.0%;0.0%;0.0%;0.0%;0.0%;0.00%;0.00%;0.00%;0.00%;72.76%;19.22%;0.05%;0.01%;0.04%;0.03%;2.00%;2.06%;1.64%;1.29%;0.53%;0.20%;0.12%;0.05%;0.00%;0.00%;0.00%;0.00%;dm-0;4326;198;0;0;279129;42737;321866;86.09%;slaves;60915;2195;3998;39;4622018;82269;4709059;95.93%;sda;60915;2195;3998;39;4622018;82269;4709059;95.93%
+
+kube-fio-read: (groupid=0, jobs=1): err= 0: pid=130: Sat Nov 18 13:20:16 2023
+  read: IOPS=916, BW=229MiB/s (240MB/s)(8192MiB/35735msec)
+    clat (usec): min=23, max=483216, avg=1089.95, stdev=9890.36
+     lat (usec): min=23, max=483216, avg=1090.01, stdev=9890.35
+    clat percentiles (usec):
+     |  1.00th=[    26],  5.00th=[    28], 10.00th=[    30], 20.00th=[    34],
+     | 30.00th=[    37], 40.00th=[    39], 50.00th=[    40], 60.00th=[    43],
+     | 70.00th=[    47], 80.00th=[    57], 90.00th=[    69], 95.00th=[  3654],
+     | 99.00th=[ 18744], 99.50th=[ 36963], 99.90th=[141558], 99.95th=[227541],
+     | 99.99th=[350225]
+   bw (  KiB/s): min=16384, max=442368, per=99.51%, avg=233594.59, stdev=149749.51, samples=71
+   iops        : min=   64, max= 1728, avg=912.48, stdev=584.96, samples=71
+  lat (usec)   : 50=72.76%, 100=19.22%, 250=0.05%, 500=0.01%, 750=0.04%
+  lat (usec)   : 1000=0.03%
+  lat (msec)   : 2=2.00%, 4=2.06%, 10=1.64%, 20=1.29%, 50=0.53%
+  lat (msec)   : 100=0.20%, 250=0.12%, 500=0.05%
+  cpu          : usr=0.12%, sys=7.02%, ctx=5022, majf=0, minf=222
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=32768,0,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+
+Run status group 0 (all jobs):
+   READ: bw=229MiB/s (240MB/s), 229MiB/s-229MiB/s (240MB/s-240MB/s), io=8192MiB (8590MB), run=35735-35735msec
+
+Disk stats (read/write):
+    dm-0: ios=4326/198, merge=0/0, ticks=279129/42737, in_queue=321866, util=86.09%, aggrios=60915/2195, aggrmerge=3998/39, aggrticks=4622018/82269, aggrin_queue=4709059, aggrutil=95.93%
+  sda: ios=60915/2195, merge=3998/39, ticks=4622018/82269, in_queue=4709059, util=95.93%
++ kubectl delete --context kind-a2e3b namespace bench
+namespace "bench" deleted
++ cleanup
++ echo 'Deleting Kind cluster container a2e3b'
+Deleting Kind cluster container a2e3b
++ [[ CentOS Stream == \C\e\n\t\O\S\ \S\t\r\e\a\m ]]
++ [[ 9 = \8 ]]
++ KIND_EXPERIMENTAL_PROVIDER=podman
++ kind delete cluster --name a2e3b
+using podman due to KIND_EXPERIMENTAL_PROVIDER
+enabling experimental podman provider
+Deleting cluster "a2e3b" ...
+Deleted nodes: ["a2e3b-control-plane"]

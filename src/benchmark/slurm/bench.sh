@@ -63,3 +63,6 @@ for (( i=0; i<ITERATIONS; i++ )); do
 
   parseLogFile "$fileLog" >> "$fileResult" || (echo "Failed to parse log file. No benchmark found for '$BENCHMARK'" >&2 && exit 1)
 done
+
+# Clean files
+rm /nfs/workloads/slurm/tmp/* || echo "Failed to delete temporary files in directory tmp"

@@ -21,6 +21,13 @@ function parseLogFile() {
     scoreWrite=$(grep "sequential write (creation) test" -A 25 "$fileLog" | grep "written, MiB/s" | awk '{print $3}')
     echo "$datetime;$PROJECT;$scoreRead;$scoreWrite"
 
+  elif [ "$BENCHMARK" == "fio-diskseq" ]; then
+    # Source: https://andypeace.com/fio_minimal.html
+    scoreRead=$(grep "kube-fio-read;" "$fileLog" | cut -d ';' -f 7)
+    scoreWrite=$(grep "kube-fio-write;" "$fileLog" | cut -d ';' -f 48)
+    # in KiB/s
+    echo "$datetime;$PROJECT;$scoreRead;$scoreWrite"
+
   elif [ "$BENCHMARK" == "bonnie-diskseq" ]; then
     # last line always csv
     scoreRead=$(grep "kube-bonnie-result" "$fileLog" | cut -d ',' -f 18) # In Bonnie++: Sequential Input Block K/sec
@@ -68,6 +75,10 @@ function initResultFile() {
   elif [ "$BENCHMARK" == "sysbench-diskrnd" ]; then
     echo "date;project;readthroughput;writethroughput"
   elif [ "$BENCHMARK" == "sysbench-diskseq" ]; then
+    echo "date;project;readthroughput;writethroughput"
+  elif [ "$BENCHMARK" == "fio-diskrnd" ]; then
+    echo "date;project;readthroughput;writethroughput"
+  elif [ "$BENCHMARK" == "fio-diskseq" ]; then
     echo "date;project;readthroughput;writethroughput"
   elif [ "$BENCHMARK" == "bonnie-diskseq" ]; then
     echo "date;project;readthroughput;writethroughput"
