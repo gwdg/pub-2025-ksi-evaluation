@@ -21,6 +21,13 @@ function parseLogFile() {
     scoreWrite=$(grep "sequential write (creation) test" -A 25 "$fileLog" | grep "written, MiB/s" | awk '{print $3}')
     echo "$datetime;$PROJECT;$scoreRead;$scoreWrite"
 
+  elif [ "$BENCHMARK" == "fio-diskrnd" ]; then
+    # Source: https://andypeace.com/fio_minimal.html
+    scoreRead=$(grep "kube-fio-read;" "$fileLog" | cut -d ';' -f 7)
+    scoreWrite=$(grep "kube-fio-write;" "$fileLog" | cut -d ';' -f 48)
+    # in KiB/s
+    echo "$datetime;$PROJECT;$scoreRead;$scoreWrite"
+
   elif [ "$BENCHMARK" == "fio-diskseq" ]; then
     # Source: https://andypeace.com/fio_minimal.html
     scoreRead=$(grep "kube-fio-read;" "$fileLog" | cut -d ';' -f 7)
