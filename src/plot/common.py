@@ -12,3 +12,7 @@ def map_approach_name(project):
     if hasattr(project, "__iter__"):
         return [_mapNames[a] for a in project]
     return _mapNames[project]
+
+
+def colors(n: int) -> list:
+    return ["#fc8405"] + ["#669fcc" for _ in range(n - 1)]

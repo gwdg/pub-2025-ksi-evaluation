@@ -30,8 +30,10 @@ print(df)
 # Plot data
 
 sns.set_theme(style="whitegrid")
-chart = sns.barplot(data=df[["project", "score"]], hue="project", palette="flare", x="project", y="score",
-                    estimator=np.mean, errorbar='sd', capsize=.1, alpha=0.85)
+chart = sns.barplot(data=df[["project", "score"]], hue="project",
+                    palette=sns.color_palette(common.colors(len(benchmark_files))),
+                    x="project", y="score",
+                    estimator=np.mean, errorbar='sd', capsize=.1, alpha=0.8)
 chart.set(xlabel='Integration Approach', ylabel='Compute Performance  [Events/s]\nhigher is better')
 
 for i in chart.containers:

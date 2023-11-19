@@ -34,16 +34,20 @@ sns.set_theme(style="whitegrid")
 fig, axes = plt.subplots(1, 2, sharey=True)
 
 # Read
-chartRead = sns.barplot(ax=axes[0], data=df[["project", "readthroughput"]], hue="project", palette="flare", x="project", y="readthroughput",
-                        estimator=np.mean, errorbar='sd', capsize=.1, alpha=0.85)
+chartRead = sns.barplot(ax=axes[0], data=df[["project", "readthroughput"]], hue="project",
+                        palette=sns.color_palette(common.colors(len(benchmark_files))),
+                        x="project", y="readthroughput",
+                        estimator=np.mean, errorbar='sd', capsize=.1, alpha=0.8)
 chartRead.set(xlabel='Integration Approach', ylabel='Throughput  [MiB/s]\nhigher is better', title="Read")
 
 for i in chartRead.containers:
     chartRead.bar_label(i, label_type="center", fmt="%.0f")
 
 # Write
-chartWrite = sns.barplot(ax=axes[1], data=df[["project", "writethroughput"]], hue="project", palette="flare", x="project", y="writethroughput",
-                    estimator=np.mean, errorbar='sd', capsize=.1, alpha=0.85)
+chartWrite = sns.barplot(ax=axes[1], data=df[["project", "writethroughput"]], hue="project",
+                         palette=sns.color_palette(common.colors(len(benchmark_files))),
+                         x="project", y="writethroughput",
+                         estimator=np.mean, errorbar='sd', capsize=.1, alpha=0.8)
 
 chartWrite.set(xlabel='Integration Approach', ylabel='Throughput  [MiB/s]\nhigher is better', title="Write")
 
