@@ -29,7 +29,7 @@ print(df)
 # Plot data
 
 sns.set_theme(style="whitegrid")
-fig, axes = plt.subplots(1, 2, sharey=True)
+fig, axes = plt.subplots(1, 2, sharey=True, figsize=(10, 4.8))
 
 # Read
 chartRead = sns.barplot(ax=axes[0], data=df[["project", "readthroughput"]], hue="project",
