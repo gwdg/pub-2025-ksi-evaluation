@@ -1,0 +1,11 @@
+date;project;readthroughput;writethroughput
+2023-11-22T17:16:22+01:00;bridge-operator;488.33;83.50
+2023-11-22T17:19:01+01:00;bridge-operator;723.16;59.91
+2023-11-22T17:21:30+01:00;bridge-operator;716.36;51.93
+2023-11-22T17:23:58+01:00;bridge-operator;716.81;40.05
+2023-11-22T17:26:22+01:00;bridge-operator;715.93;92.63
+2023-11-22T17:28:55+01:00;bridge-operator;707.67;104.37
+2023-11-22T17:31:24+01:00;bridge-operator;731.77;73.57
+2023-11-22T17:33:58+01:00;bridge-operator;703.61;100.66
+2023-11-22T17:36:31+01:00;bridge-operator;730.74;63.42
+2023-11-22T17:39:10+01:00;bridge-operator;727.00;106.76

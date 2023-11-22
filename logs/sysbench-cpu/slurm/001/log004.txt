@@ -1,0 +1,34 @@
+srun: job 684 queued and waiting for resources
+srun: job 684 has been allocated resources
++ sysbench cpu --threads=56 --cpu-max-prime=20000 run
+sysbench 1.0.20 (using system LuaJIT 2.1.0-beta3)
+
+Running the test with following options:
+Number of threads: 56
+Initializing random number generator from current time
+
+
+Prime numbers limit: 20000
+
+Initializing worker threads...
+
+Threads started!
+
+CPU speed:
+    events per second: 14733.66
+
+General statistics:
+    total time:                          10.0040s
+    total number of events:              147426
+
+Latency (ms):
+         min:                                    3.24
+         avg:                                    3.80
+         max:                                    7.95
+         95th percentile:                        3.89
+         sum:                               559986.77
+
+Threads fairness:
+    events (avg/stddev):           2632.6071/35.03
+    execution time (avg/stddev):   9.9998/0.00
+

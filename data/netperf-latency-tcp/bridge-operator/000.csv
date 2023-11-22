@@ -1,0 +1,11 @@
+date;project;min_latency;max_latency;mean_latency;stddev_latency
+2023-11-22T18:44:28+01:00;bridge-operator;29;197;58.12;4.49
+2023-11-22T18:45:09+01:00;bridge-operator;29;176;58.23;4.89
+2023-11-22T18:45:46+01:00;bridge-operator;39;153;58.95;5.94
+2023-11-22T18:46:23+01:00;bridge-operator;29;194;57.85;4.04
+2023-11-22T18:47:04+01:00;bridge-operator;29;183;58.14;4.70
+2023-11-22T18:47:41+01:00;bridge-operator;29;197;58.06;4.51
+2023-11-22T18:48:23+01:00;bridge-operator;29;135;57.92;4.47
+2023-11-22T18:49:05+01:00;bridge-operator;29;190;57.87;4.51
+2023-11-22T18:49:46+01:00;bridge-operator;29;143;58.15;4.52
+2023-11-22T18:50:23+01:00;bridge-operator;29;163;58.15;4.98
