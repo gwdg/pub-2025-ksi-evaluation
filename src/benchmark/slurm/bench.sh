@@ -1,5 +1,5 @@
 #!/bin/bash
-# Script should be execute on Slurm cluster
+# Script should be execute on Slurm cluster by main.sh
 
 source /etc/profile # Fix slurm seems to be not in PATH
 
