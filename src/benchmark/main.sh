@@ -28,6 +28,8 @@ export BENCHMARK=$2
 
 export SLURM_HOST="10.10.41.10"
 export SLURM_USER="smetje"
+export K8S_HOST="141.5.105.124"
+export K8S_USER="cloud"
 
 
 # Find out and returns the next benchmark number. This can be used for the next result file.
@@ -100,6 +102,20 @@ elif [ "$PROJECT" == "slurm" ]; then
 
   # Copy log files from Slurm cluster back to laptop
   scp -r -i "$HOME/.ssh/id_rsa" $SLURM_USER@$SLURM_HOST:/nfs/workloads/slurm/logs/* "$dirLogs"
+
+elif [ "$PROJECT" == "bridge-operator" ]; then
+  # Copy the benchmark scripts to cloud VM using scp
+  scp -r -i "$HOME/.ssh/id_rsa" src/benchmark/* $K8S_USER@$K8S_HOST:/opt/bridge-operator/benchmark
+
+  # Run benchmark script on cloud VM running Kubernetes cluster using SSH
+  cat src/benchmark/bridge-operator/bench.sh | ssh -i "$HOME/.ssh/id_rsa" $K8S_USER@$K8S_HOST bash -s -- "$BENCHMARK"
+
+  # Copy benchmark result files from cloud VM back to laptop
+  scp -i "$HOME/.ssh/id_rsa" $K8S_USER@$K8S_HOST:/opt/bridge-operator/data/temp.csv "$fileResult"
+
+  # Copy log files from cloud VM back to laptop
+  scp -r -i "$HOME/.ssh/id_rsa" $K8S_USER@$K8S_HOST:/opt/bridge-operator/logs/* "$dirLogs"
+
 else
   echo "No project found for '$PROJECT'" >&2
   exit 1

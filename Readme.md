@@ -117,22 +117,24 @@ netserver -p 16604
 
 ## Notes
 - For testing we disabled writing caching as described here: https://stackoverflow.com/questions/20215516/disabling-disk-cache-in-linux/20215603#20215603
-- Nevertheless, Linux seems to heavily utilizes file caching on read operations. To the best of our knowledge, this can not be disabled.
-
+- Nevertheless, Linux seems to heavily utilizes file caching on read operations. To the best of our knowledge, this can not be disabled. 
+A solution is to use more file IO size for read or write operations, than memory is available
+- To benchmark the project bridge-operator, a Kubernetes cluster is needed. Theoretically, a Kind cluster is sufficient. 
+We used a single node Kubernetes cluster deployed in a cloud VM. In order to obtain accurate results in startup-time benchmark, the time on the Slurm node and the VM have to be correct.
 
 ## Completed Benchmarks on Projects
 |                               | KSI                                                     | HPK | Bridge-Operator | Slurm                                                   |
 |-------------------------------|---------------------------------------------------------|-----|-----------------|---------------------------------------------------------|
-| Sysbench CPU                  | ✅                                                       |     |                 | ✅                                                       |
-| Stream Memory                 | ✅                                                       |     |                 | ✅                                                       |
-| Fio Disk seq                  | ✅                                                       |     |                 | ✅                                                       |
-| Fio Disk rnd                  | ✅                                                       |     |                 | ✅                                                       |
+| Sysbench CPU                  | ✅                                                       |     | ✅               | ✅                                                       |
+| Stream Memory                 | ✅                                                       |     | ✅               | ✅                                                       |
+| Fio Disk seq                  | ✅                                                       |     | ✅               | ✅                                                       |
+| Fio Disk rnd                  | ✅                                                       |     | ✅               | ✅                                                       |
 | ~~Sysbench FileIO rnd~~       | 💀 time-based => can not read / write desired file size |     |                 | 💀 time-based => can not read / write desired file size |
 | ~~Sysbench FileIO seq~~       | 💀 time-based => can not read / write desired file size |     |                 | 💀 time-based => can not read / write desired file size |
 | ~~Bonnie++ FileIO seq~~       | 💀 bug: no seq read available                           |     |                 |                                                         |
-| Iperf3 Network Throughput     | ✅                                                       |     |                 | ✅                                                       |
-| Netperf Network Latency (TCP) | ✅                                                       |     |                 | ✅                                                       |
-| Workload start up time        | ✅                                                       |     |                 | ✅                                                       |
+| Iperf3 Network Throughput     | ✅                                                       |     | ✅               | ✅                                                       |
+| Netperf Network Latency (TCP) | ✅                                                       |     | ✅               | ✅                                                       |
+| Workload start up time        | ✅                                                       |     | ✅               | ✅                                                       |
 
 ✅ = successfully completed
 💀 = error occurred / completion not possible
