@@ -62,6 +62,9 @@ for (( i=0; i<ITERATIONS; i++ )); do
   srun -N1 -c56 --nodelist="$SLURM_NODELIST" /bin/bash "$PWD/benchmark/slurm/workload-$BENCHMARK.sh"  2>&1 | tee "$fileLog"
 
   parseLogFile "$fileLog" >> "$fileResult" || (echo "Failed to parse log file. No benchmark found for '$BENCHMARK'" >&2 && exit 1)
+
+  # Give resources some time to recover - e.g. CPU to cool down (fair for comparison with other projects that have greater startup time)
+  sleep 10
 done
 
 # Clean files
