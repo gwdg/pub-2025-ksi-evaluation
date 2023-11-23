@@ -17,7 +17,7 @@ export ITERATIONS=10
 export S3_SECRET=mysecret-s3
 export RESOURCE_SECRET=secret-slurm
 export S3_ENDPOINT=minio-storage.metje.it
-export RESOURCE_URL="http://10.10.41.10:6820/slurm/v0.0.37"
+export RESOURCE_URL="http://10.10.41.10:6820/slurm/v0.0.39"
 # Expects Kubernetes secrets mysecret-s3 and secret-slurm to be already present in Kubernetes cluster
 
 cd /opt/bridge-operator || exit 1
@@ -88,6 +88,7 @@ $SCRIPT
       {
       "nodes": "1",
       "partition": "linux",
+      "allocation_node_list": "$SLURM_NODELIST",
       "tasks": 1,
       "cpus_per_task": 56,
       "name": "bridge-operator-eval",
@@ -132,6 +133,9 @@ EOF
   elif [ "$jobstate" == "CANCELLED" ]; then
     echo "BridgeJob cancelled" >&2 && exit 1
   fi
+
+  # Give resources some time to recover - e.g. CPU to cool down (fair for comparison with other projects that have greater startup time)
+  sleep 5
 done
 
 # Clean files (uses slurm workloads and therefore tmp files are in slurm directory)
