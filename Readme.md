@@ -125,7 +125,7 @@ We used a single node Kubernetes cluster deployed in a cloud VM. In order to obt
 ## Completed Benchmarks on Projects
 |                               | KSI                                                     | HPK | Bridge-Operator | Slurm                                                   |
 |-------------------------------|---------------------------------------------------------|-----|-----------------|---------------------------------------------------------|
-| Sysbench CPU                  | ✅                                                       |     | ✅               | ✅                                                       |
+| Sysbench CPU                  | ✅                                                       | ✅   | ✅               | ✅                                                       |
 | Stream Memory                 | ✅                                                       |     | ✅               | ✅                                                       |
 | Fio Disk seq                  | ✅                                                       |     | ✅               | ✅                                                       |
 | Fio Disk rnd                  | ✅                                                       |     | ✅               | ✅                                                       |

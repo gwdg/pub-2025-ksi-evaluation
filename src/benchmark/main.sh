@@ -116,6 +116,20 @@ elif [ "$PROJECT" == "bridge-operator" ]; then
   # Copy log files from cloud VM back to laptop
   scp -r -i "$HOME/.ssh/id_rsa" $K8S_USER@$K8S_HOST:/opt/bridge-operator/logs/* "$dirLogs"
 
+elif [ "$PROJECT" == "hpk" ]; then
+  # Copy the benchmark scripts using scp
+  scp -r -i "$HOME/.ssh/id_rsa" src/benchmark/* $SLURM_USER@$SLURM_HOST:/nfs/workloads/hpk/benchmark
+
+  # Run benchmark script on Slurm cluster using SSH
+  # Source: https://stackoverflow.com/a/76544706/14355362
+  cat src/benchmark/hpk/bench.sh | ssh -i "$HOME/.ssh/id_rsa" $SLURM_USER@$SLURM_HOST bash -s -- "$BENCHMARK"
+
+  # Copy benchmark result files from Slurm cluster back to laptop
+  scp -i "$HOME/.ssh/id_rsa" $SLURM_USER@$SLURM_HOST:/nfs/workloads/hpk/data/temp.csv "$fileResult"
+
+  # Copy log files from Slurm cluster back to laptop
+  scp -r -i "$HOME/.ssh/id_rsa" $SLURM_USER@$SLURM_HOST:/nfs/workloads/hpk/logs/* "$dirLogs"
+
 else
   echo "No project found for '$PROJECT'" >&2
   exit 1
