@@ -64,9 +64,8 @@ for (( i=0; i<ITERATIONS; i++ )); do
   START_MILLIS=$(date +%s%N | cut -b1-13) # used function parseLogFile to measure delay of workload start
   export START_MILLIS
   # HPK kubernetes cluster is used
-  # Reuse the workloads of KSI here for HPK
   # Store stdout and stderr in file, but keep console output. Source: https://unix.stackexchange.com/a/362452
-  /bin/bash "$PWD/benchmark/ksi/workload-$BENCHMARK.sh"  2>&1 | tee "$fileLog"
+  /bin/bash "$PWD/benchmark/hpk/workload-$BENCHMARK.sh"  2>&1 | tee "$fileLog"
 
   parseLogFile "$fileLog" >> "$fileResult" || (echo "Failed to parse log file. No benchmark found for '$BENCHMARK'" >&2 && exit 1)
 

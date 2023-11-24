@@ -13,6 +13,14 @@ spec:
     spec:
       securityContext:
         runAsUser: 0
+      initContainers:
+      - name: init-container-resources
+        image: busybox:1.28
+        command: ['sh', '-c', "echo Required for Slurm resource allocation cpuPerTask in HPK"]
+        resources:
+          requests:
+            cpu: "28000m"
+
       containers:
       - command:
         - sysbench

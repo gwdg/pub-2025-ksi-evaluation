@@ -1,0 +1,45 @@
++ kubectl create --context '' namespace bench
+namespace/bench created
++ kubectl create -n bench --context '' -f -
+job.batch/stream created
++ kubectl wait --context '' --for=condition=complete --timeout=10h job/stream -n bench
+job.batch/stream condition met
++ kubectl logs job/stream -n bench --context ''
+Defaulted container "stream" out of: stream, init-container-resources (init)
+INFO:    Converting SIF file to temporary sandbox...
+-------------------------------------------------------------
+STREAM version $Revision: 5.10 $
+-------------------------------------------------------------
+This system uses 8 bytes per array element.
+-------------------------------------------------------------
+Array size = 100000000 (elements), Offset = 0 (elements)
+Memory per array = 762.9 MiB (= 0.7 GiB).
+Total memory required = 2288.8 MiB (= 2.2 GiB).
+Each kernel will be executed 10 times.
+ The *best* time for each kernel (excluding the first iteration)
+ will be used to compute the reported bandwidth.
+-------------------------------------------------------------
+Number of Threads requested = 56
+Number of Threads counted = 56
+-------------------------------------------------------------
+Your clock granularity/precision appears to be 1 microseconds.
+Each test below will take on the order of 19041 microseconds.
+   (= 19041 clock ticks)
+Increase the size of the arrays if this shows that
+you are not getting at least 20 clock ticks per test.
+-------------------------------------------------------------
+WARNING -- The above is only a rough guideline.
+For best results, please be sure you know the
+precision of your system timer.
+-------------------------------------------------------------
+Function    Best Rate MB/s  Avg time     Min time     Max time
+Copy:           81980.0     0.019792     0.019517     0.020198
+Scale:          62429.2     0.027167     0.025629     0.030105
+Add:            69038.7     0.037990     0.034763     0.040283
+Triad:          69019.3     0.038003     0.034773     0.042586
+-------------------------------------------------------------
+Solution Validates: avg error less than 1.000000e-13 on all three arrays
+-------------------------------------------------------------
+INFO:    Cleaning up image...
++ kubectl delete --context '' namespace bench
+namespace "bench" deleted
