@@ -16,7 +16,7 @@ spec:
       - command: ["sh", "-c"]
         args:
         - |
-          echo "workload-start-millis $(date +%s%N | cut -b1-13)"
+          echo "workload-start-millis \$(date +%s%N | cut -b1-13)"
         image: soerenmetje/millis
         name: millis
       restartPolicy: Never
