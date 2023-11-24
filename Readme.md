@@ -126,7 +126,7 @@ We used a single node Kubernetes cluster deployed in a cloud VM. In order to obt
 |                               | KSI                                                     | HPK | Bridge-Operator | Slurm                                                   |
 |-------------------------------|---------------------------------------------------------|-----|-----------------|---------------------------------------------------------|
 | Sysbench CPU                  | ✅                                                       | ✅   | ✅               | ✅                                                       |
-| Stream Memory                 | ✅                                                       |     | ✅               | ✅                                                       |
+| Stream Memory                 | ✅                                                       | ✅   | ✅               | ✅                                                       |
 | Fio Disk seq                  | ✅                                                       |     | ✅               | ✅                                                       |
 | Fio Disk rnd                  | ✅                                                       |     | ✅               | ✅                                                       |
 | ~~Sysbench FileIO rnd~~       | 💀 time-based => can not read / write desired file size |     |                 | 💀 time-based => can not read / write desired file size |
@@ -134,7 +134,7 @@ We used a single node Kubernetes cluster deployed in a cloud VM. In order to obt
 | ~~Bonnie++ FileIO seq~~       | 💀 bug: no seq read available                           |     |                 |                                                         |
 | Iperf3 Network Throughput     | ✅                                                       |     | ✅               | ✅                                                       |
 | Netperf Network Latency (TCP) | ✅                                                       |     | ✅               | ✅                                                       |
-| Workload start up time        | ✅                                                       |     | ✅               | ✅                                                       |
+| Workload start up time        | ✅                                                       | ✅   | ✅               | ✅                                                       |
 
 ✅ = successfully completed
 💀 = error occurred / completion not possible

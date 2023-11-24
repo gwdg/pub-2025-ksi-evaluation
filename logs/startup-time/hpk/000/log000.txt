@@ -1,0 +1,13 @@
++ kubectl create --context '' -f -
+++ date +%s%N
+++ cut -b1-13
+job.batch/millis created
++ kubectl wait --context '' --for=condition=complete --timeout=10h job/millis
+job.batch/millis condition met
++ kubectl logs job/millis --context ''
+Defaulted container "millis" out of: millis, init-container-resources (init)
+INFO:    Converting SIF file to temporary sandbox...
+workload-start-millis 1700825094172
+INFO:    Cleaning up image...
++ kubectl delete --context '' job millis
+job.batch "millis" deleted
