@@ -82,8 +82,9 @@ iperf3 -s -p 5003
 
 For the Netperf server you can run:
 ```shell
-netserver -p 16604
+netserver -D -p 16604
 ```
+> `-D` to do not daemonize and `-p` to set port.
 
 ## Getting Started
 This repository contains a script [main.sh](src/benchmark/main.sh). This script is designed to be executed locally, e.g., on a laptop. It 
