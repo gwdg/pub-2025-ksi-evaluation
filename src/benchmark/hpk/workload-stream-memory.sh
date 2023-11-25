@@ -1,9 +1,9 @@
 #!/bin/bash
 set -x # Print each command before execution
 
-kubectl create --context "$K8S_CLUSTER_NAME" namespace bench
+kubectl create namespace bench
 # Create workload as pods or jobs
-kubectl create -n bench --context "$K8S_CLUSTER_NAME" -f - <<EOF
+kubectl create -n bench -f - <<EOF
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -32,10 +32,10 @@ spec:
       restartPolicy: Never
 EOF
 
-kubectl wait --context "$K8S_CLUSTER_NAME" --for=condition=complete --timeout=10h job/stream -n bench
+kubectl wait --for=condition=complete --timeout=10h job/stream -n bench
 
 # Print results
-kubectl logs job/stream -n bench --context "$K8S_CLUSTER_NAME"
+kubectl logs job/stream -n bench
 
 # Clean up
-kubectl delete --context "$K8S_CLUSTER_NAME" namespace bench
+kubectl delete namespace bench

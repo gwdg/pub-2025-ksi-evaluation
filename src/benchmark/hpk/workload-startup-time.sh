@@ -2,7 +2,7 @@
 set -x # Print each command before execution
 
 # Create workload as pods or jobs
-kubectl create --context "$K8S_CLUSTER_NAME" -f - <<EOF
+kubectl create -f - <<EOF
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -29,10 +29,10 @@ spec:
       restartPolicy: Never
 EOF
 
-kubectl wait --context "$K8S_CLUSTER_NAME" --for=condition=complete --timeout=10h job/millis
+kubectl wait --for=condition=complete --timeout=10h job/millis
 
 # Print results
-kubectl logs job/millis --context "$K8S_CLUSTER_NAME"
+kubectl logs job/millis
 
 # Clean up
-kubectl delete --context "$K8S_CLUSTER_NAME" job millis
+kubectl delete job millis
