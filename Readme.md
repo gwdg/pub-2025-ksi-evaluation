@@ -45,39 +45,9 @@ To perform the evaluation, a certain prerequisites have to be ensured:
 - Local machine (e.g. laptop) can log in on the Slurm master node using SSH and the SSH key `.ssh/id_rsa`.
 - Local machine has `bash`, `ssh`, and `python3` installed as well as the python packages defined in [requirements.txt](requirements.txt).
 - All prerequisites of all projects (KSI, HPK, Bridge-Operator) are ensured.
-- For Slurm and Bridge-Operator benchmarks, the benchmark tools has to be installed on the cluster nodes. KSI and HPK use container images and therefore do not rely on installed software.
-
-## Getting Started
-This repository contains a script [main.sh](src/benchmark/main.sh). This script is designed to be executed locally, e.g., on a laptop. It 
-- connects to the Slurm cluster (and Kubernetes cluster if needed)
-- runs benchmarks
-- copies the result file (`.csv`) as well as log files from cluster back to the local machine
-
-Following command is an example for evaluating the `ksi` project using the `stream-memory` benchmark:
-```shell
-# /bin/bash src/benchmark/main.sh <project> <benchmark>
-/bin/bash src/benchmark/main.sh ksi stream-memory
-```
-After execution, the result file can be obtained in `data/` and the log files in `logs/`.
-
-### Parameters
-Available parameters - the project and the benchmark - can be determined by the directory and file names.
-The directory names in `src/benchmark/` are the available projects:
-- `ksi`
-- `hpk`
-- `bridge-operator`
-- `slurm`
-
-The available benchmarks can be determined by the file names `workload-*.sh` inside the project directories:
-- `sysbench-cpu`
-- `stream-memory`
-- `fio-diskrnd`
-- `fio-diskseq`
-- `netperf-latency-tcp`
-- `iperf3-bandwidth`
-- `startup-time`
-
-The benchmarks `fio-diskrnd`, `fio-diskseq`, `netperf-latency-tcp`, and `iperf3-bandwidth`,  require manual actions on the slurm cluster before they are executed. This is covered in the following sections.
+- For benchmarks on Slurm and Bridge-Operator, the benchmark tools has to be installed on the cluster nodes. KSI and HPK use container images and therefore do not rely on installed software.
+- For benchmarks on HPK, the HPK components has to be started and configured manually as described in [Setup.md](src/benchmark/hpk/Setup.md).
+- To run Fio, iPerf 3, and Netperf benchmarks, also manual steps are needed as described below.
 
 ### Fio
 The fio disk benchmarks heavily depend on the available RAM. 
@@ -114,6 +84,39 @@ For the Netperf server you can run:
 ```shell
 netserver -p 16604
 ```
+
+## Getting Started
+This repository contains a script [main.sh](src/benchmark/main.sh). This script is designed to be executed locally, e.g., on a laptop. It 
+- connects to the Slurm cluster (and Kubernetes cluster if needed)
+- runs benchmarks
+- copies the result file (`.csv`) as well as log files from cluster back to the local machine
+
+Following command is an example for evaluating the `ksi` project using the `stream-memory` benchmark:
+```shell
+# /bin/bash src/benchmark/main.sh <project> <benchmark>
+/bin/bash src/benchmark/main.sh ksi stream-memory
+```
+After execution, the result file can be obtained in `data/` and the log files in `logs/`.
+
+### Parameters
+Available parameters - the project and the benchmark - can be determined by the directory and file names.
+The directory names in `src/benchmark/` are the available projects:
+- `ksi`
+- `hpk`
+- `bridge-operator`
+- `slurm`
+
+The available benchmarks can be determined by the file names `workload-*.sh` inside the project directories:
+- `sysbench-cpu`
+- `stream-memory`
+- `fio-diskrnd`
+- `fio-diskseq`
+- `netperf-latency-tcp`
+- `iperf3-bandwidth`
+- `startup-time`
+
+The benchmarks `fio-diskrnd`, `fio-diskseq`, `netperf-latency-tcp`, and `iperf3-bandwidth`,  require manual actions on the slurm cluster before they are executed. This is covered in the [prerequisites sections](#prerequisites).
+
 
 ## Notes
 - For testing we disabled writing caching as described here: https://stackoverflow.com/questions/20215516/disabling-disk-cache-in-linux/20215603#20215603
