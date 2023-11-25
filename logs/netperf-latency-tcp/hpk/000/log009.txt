@@ -1,0 +1,15 @@
++ kubectl create namespace bench
+namespace/bench created
++ kubectl create -n bench -f -
+job.batch/netperf created
++ kubectl wait --for=condition=complete --timeout=10h job/netperf -n bench
+job.batch/netperf condition met
++ kubectl logs job/netperf -n bench
+Defaulted container "netperf" out of: netperf, init-container-resources (init)
+INFO:    Converting SIF file to temporary sandbox...
+MIGRATED TCP REQUEST/RESPONSE TEST from 0.0.0.0 (0.0.0.0) port 0 AF_INET to 10.10.41.11 () port 0 AF_INET : demo : first burst 0
+Minimum Latency Microseconds,Maximum Latency Microseconds,Mean Latency Microseconds,Stddev Latency Microseconds
+46,1094,58.60,5.85
+INFO:    Cleaning up image...
++ kubectl delete namespace bench
+namespace "bench" deleted

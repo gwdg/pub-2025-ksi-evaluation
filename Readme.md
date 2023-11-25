@@ -136,8 +136,8 @@ We used a single node Kubernetes cluster deployed in a cloud VM. In order to obt
 | ~~Sysbench FileIO rnd~~       | 💀 time-based => can not read / write desired file size |     |                 | 💀 time-based => can not read / write desired file size |
 | ~~Sysbench FileIO seq~~       | 💀 time-based => can not read / write desired file size |     |                 | 💀 time-based => can not read / write desired file size |
 | ~~Bonnie++ FileIO seq~~       | 💀 bug: no seq read available                           |     |                 |                                                         |
-| Iperf3 Network Throughput     | ✅                                                       |     | ✅               | ✅                                                       |
-| Netperf Network Latency (TCP) | ✅                                                       |     | ✅               | ✅                                                       |
+| Iperf3 Network Throughput     | ✅                                                       | ✅   | ✅               | ✅                                                       |
+| Netperf Network Latency (TCP) | ✅                                                       | ✅   | ✅               | ✅                                                       |
 | Workload start up time        | ✅                                                       | ✅   | ✅               | ✅                                                       |
 
 ✅ = successfully completed
