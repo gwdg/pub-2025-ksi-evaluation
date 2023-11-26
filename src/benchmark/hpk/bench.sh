@@ -73,4 +73,6 @@ for (( i=0; i<ITERATIONS; i++ )); do
   sleep 5
 done
 
-rm /nfs/workloads/$PROJECT/tmp/* || echo "Failed to delete temporary files in directory tmp"
+# Clean up temporary files
+[ -d "/tmp/fio-bench" ] && rm -rf /tmp/fio-bench/* || (echo "Failed to delete temporary files in directory tmp" >&2 && exit 1)
+rm -rf /nfs/workloads/$PROJECT/tmp/* || (echo "Failed to delete temporary files in directory tmp" >&2 && exit 1)
