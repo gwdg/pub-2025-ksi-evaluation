@@ -45,9 +45,12 @@ To perform the evaluation, a certain prerequisites have to be ensured:
 - Local machine (e.g. laptop) can log in on the Slurm master node using SSH and the SSH key `.ssh/id_rsa`.
 - Local machine has `bash`, `ssh`, and `python3` installed as well as the python packages defined in [requirements.txt](requirements.txt).
 - All prerequisites of all projects (KSI, HPK, Bridge-Operator) are ensured.
-- For benchmarks on Slurm and Bridge-Operator, the benchmark tools has to be installed on the cluster nodes. KSI and HPK use container images and therefore do not rely on installed software.
-- For benchmarks on HPK, the HPK components has to be started and configured manually as described in [Setup.md](src/benchmark/hpk/Setup.md).
-- To run Fio, iPerf 3, and Netperf benchmarks, also manual steps are needed as described below.
+- For benchmarks on Slurm and Bridge-Operator, the benchmark tools has to be installed on the cluster nodes. 
+KSI and HPK use container images and therefore do not rely on installed software.
+- For benchmarks on Bridge-Operator, an additional machine is required, that runs a Kubernetes cluster. 
+In the cluster the Bridge-Operator is required to be up and running. We describe the setup details in [Setup-Bridge-Operator.md](Setup-Bridge-Operator.md).
+- For benchmarks on HPK, the HPK components has to be started and configured manually as described in [Setup-HPK.md](Setup-HPK.md).
+- To run Fio, iPerf3, and Netperf benchmarks, also manual steps are needed as described below.
 
 ### Fio
 The fio disk benchmarks heavily depend on the available RAM. 
@@ -62,20 +65,20 @@ Another solution to limit the available RAM during the benchmark by utilizing th
 Essentially, this tool allocates RAM until a desired amount of RAM is left. This limits Linux's capabilities to cache the files during the benchmark. 
 We provide the sourcecode for mem-eater in [src/benchmark/common/mem-eater.c](src/benchmark/common/mem-eater.c). 
 Start mem-eater **manually** before running the fio disk benchmarks. 
-Regarding the desired RAM, it is a good rule of thumb to choose to benchmark the total filesize that is at least 4 times the available RAM - e.g. 8GiB files for 2GiB RAM.
+Regarding the desired RAM, it is a good rule of thumb to choose to benchmark the total filesize that is at least 2 times the available RAM - e.g. 8GiB files for 4GiB RAM.
 ```shell
 # Compile
 gcc -o mem-eater mem-eater.c
 
 # Run ./mem-eater <desiredRamInMiB>
-./mem-eater 2048
+./mem-eater 4096
 ```
 
-### IPerf 3 and Netperf
-The tools IPerf 3 and Netperf operate in a client-server model. 
+### iPerf3 and Netperf
+The tools iPerf3 and Netperf operate in a client-server model. 
 Therefore, in this setup it is required that the server component is **started manually** on a second node in the Slurm cluster.
 
-In case of iPerf 3 the server can be started by following command:
+In case of iPerf3 the server can be started by following command:
 ```shell
 iperf3 -s -p 5003
 ```
@@ -127,16 +130,18 @@ A solution is to use more file IO size for read or write operations, than memory
 We used a single node Kubernetes cluster deployed in a cloud VM. In order to obtain accurate results in startup-time benchmark, the time on the Slurm node and the VM have to be correct.
 
 ## Completed Benchmarks on Projects
+In the current state, we completed the following benchmarks on each project:
+
 |                               | KSI                                                     | HPK | Bridge-Operator | Slurm                                                   |
 |-------------------------------|---------------------------------------------------------|-----|-----------------|---------------------------------------------------------|
 | Sysbench CPU                  | ✅                                                       | ✅   | ✅               | ✅                                                       |
 | Stream Memory                 | ✅                                                       | ✅   | ✅               | ✅                                                       |
-| Fio Disk seq                  | ✅                                                       |     | ✅               | ✅                                                       |
-| Fio Disk rnd                  | ✅                                                       |     | ✅               | ✅                                                       |
+| Fio Disk seq                  | ✅                                                       | ✅   | ✅               | ✅                                                       |
+| Fio Disk rnd                  | ✅                                                       | ✅   | ✅               | ✅                                                       |
 | ~~Sysbench FileIO rnd~~       | 💀 time-based => can not read / write desired file size |     |                 | 💀 time-based => can not read / write desired file size |
 | ~~Sysbench FileIO seq~~       | 💀 time-based => can not read / write desired file size |     |                 | 💀 time-based => can not read / write desired file size |
 | ~~Bonnie++ FileIO seq~~       | 💀 bug: no seq read available                           |     |                 |                                                         |
-| Iperf3 Network Throughput     | ✅                                                       | ✅   | ✅               | ✅                                                       |
+| iPerf3 Network Throughput     | ✅                                                       | ✅   | ✅               | ✅                                                       |
 | Netperf Network Latency (TCP) | ✅                                                       | ✅   | ✅               | ✅                                                       |
 | Workload start up time        | ✅                                                       | ✅   | ✅               | ✅                                                       |
 
