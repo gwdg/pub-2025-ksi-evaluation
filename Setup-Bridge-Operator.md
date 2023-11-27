@@ -87,3 +87,11 @@ spec:
     secure: true
 EOF
 ```
+
+## Debugging
+
+### Operator Logs
+For each Bridgejob, the operater creates a pod that handles the submission.
+Show the logs of this pod:
+```shell
+kubectl logs myjobname-bridge-pod
