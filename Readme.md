@@ -129,6 +129,28 @@ A solution is to use more file IO size for read or write operations, than memory
 - To benchmark the project bridge-operator, a Kubernetes cluster is needed. Theoretically, a Kind cluster is sufficient. 
 We used a single node Kubernetes cluster deployed in a cloud VM. In order to obtain accurate results in startup-time benchmark, the time on the Slurm node and the VM have to be correct.
 
+## How to Add a New Benchmark?
+
+To add a new benchmark perform the following actions. Replace `<benchmark-name>` with the actual name.
+
+1. Add a Bash script file to each project dir in `src/benchmark`. These files run the benchmark. Use the file name `workload-<benchmark-name>.sh`.
+2. Extend the Bash script [src/benchmark/common/parse.sh](src/benchmark/common/parse.sh) in the functions `initResultFile` and `parseLogFile` to add parsing functionality.
+3. Add a Python script file named `plot-<benchmark-name>.py` to the directory `src/plot`.
+4. Test the process: `/bin/bash src/benchmark/main.sh slurm <benchmark-name>`.
+
+## How to Add a New Project?
+
+To add a new project that should be evaluated do the following actions. Replace `<project-name>` with the actual project name.
+
+1. Add a new directory named `<project-name>` to the directory `src/benchmark`.
+2. Add multiple Bash script files for all benchmarks into this directory. Use the file names `workload-<benchmark-name>.sh`. 
+For parsing, the benchmark result is expected to be printed to stdout as done in the existing workload bash script files.
+3. Extend the Bash script [src/benchmark/main.sh](src/benchmark/main.sh), by adding a new case for the project in the if-elif-else construct marked by `# Start benchmarking`.
+4. Extend all Python script files in the directory `src/plot` to add `<project-name>` to the list of `project_dirs`.
+5. Extend the Python script [src/plot/common.py](src/plot/common.py) by adding a human-readable project name to the dict `_mapNames`.
+6. Test the process: `/bin/bash src/benchmark/main.sh <project-name> stream-memory`.
+
+
 ## Completed Benchmarks on Projects
 In the current state, we completed the following benchmarks on each project:
 

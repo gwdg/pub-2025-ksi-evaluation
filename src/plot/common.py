@@ -11,7 +11,7 @@ _mapNames = {
 def map_approach_name(project):
     if hasattr(project, "__iter__"):
         return [_mapNames[a] for a in project]
-    return _mapNames[project]
+    return _mapNames[project] if project in _mapNames else project
 
 
 def colors(n: int) -> list:

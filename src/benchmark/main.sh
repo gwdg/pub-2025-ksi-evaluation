@@ -66,6 +66,7 @@ echo "Result file: $fileResult"
 dirLogs=$(printf "./logs/$BENCHMARK/$PROJECT/%03d/" $benchmarkNumber)
 mkdir -p "$dirLogs"
 
+# Start benchmarking
 if [ "$PROJECT" == "ksi" ]; then
 
   # Run setup script on Slurm cluster using SSH
