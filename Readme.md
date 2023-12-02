@@ -28,12 +28,15 @@ In our evaluation we used the following benchmark tools to evaluate certain metr
  
 
 ## Content
-- Shell scripts in `src/benchmark/`:
-  - to perform benchmarks on each project
-  - to write benchmark results into `.csv` files
-- Python scripts in `src/plot/`
-  - to read the result files
-  - to create plots
+- Shell scripts in `src/benchmark/` to:
+  - perform benchmarks on each project
+  - write benchmark results into `.csv` files
+- Python scripts in `src/plot/` to:
+  - read the result files
+  - create plots
+- Jupyter notebook [analysis.ipynb](src/analysis/analysis.ipynb) to:
+  - read the result files
+  - print details such as mean, std, and difference to slurm
 - CSV result files in `data/`
 - Log files in `logs/`
 - Plot images in `plots/`
