@@ -1,7 +1,7 @@
 # Kubernetes Slurm Evaluation
 
 This repository implements an approach to evaluate projects that integrate Kubernetes and Slurm.
-This project is part of my master’s thesis at the [Georg August University of Göttingen](https://www.uni-goettingen.de). The goal of the thesis is to investigate approaches to run Kubernetes workloads in a Slurm cluster.
+This project is part of my [master’s thesis](https://doi.org/10.25625/GDFCFP) at the Georg August University of Göttingen. The goal of the thesis is to investigate approaches to run Kubernetes workloads in a Slurm cluster.
 In this repository, the following projects are subject of our evaluation:
 - [IBM/Bridge-Operator](https://github.com/IBM/Bridge-Operator)
 - [CARV-ICS-FORTH/HPK](https://github.com/CARV-ICS-FORTH/HPK)
