@@ -1,17 +1,22 @@
 # Kubernetes Slurm Evaluation
 
-This repository implements an approach to evaluate projects that integrate Kubernetes and Slurm.
-This project is part of my [master’s thesis](https://doi.org/10.25625/GDFCFP) at the Georg August University of Göttingen. The goal of the thesis is to investigate approaches to run Kubernetes workloads in a Slurm cluster.
+This repository implements scripts to evaluate and benchmark projects that integrate Kubernetes and Slurm.
+This project was originally part of a [master’s thesis](https://doi.org/10.25625/GDFCFP) at the Georg August University of Göttingen.
+The goal of the thesis was to investigate approaches to run Kubernetes workloads in a Slurm cluster.
 In this repository, the following projects are subject of our evaluation:
 - [IBM/Bridge-Operator](https://github.com/IBM/Bridge-Operator)
 - [CARV-ICS-FORTH/HPK](https://github.com/CARV-ICS-FORTH/HPK)
-- [soerenmetje/KSI](https://github.com/soerenmetje/kind-slurm-integration)
-- Slurm (without any Kubernetes integration - serves as a reference point / base line)
+- [soerenmetje/KSI](https://github.com/soerenmetje/kind-slurm-integration) - Our original KSI implementation
+- [gwdg/KSI](https://github.com/gwdg/pub-2025-ksi) - Our improved KSI implementation
+- Slurm (without any Kubernetes integration - serves as a reference point / baseline)
 
 > We are aware of further projects such as [Sylabs/WLM-Operator](https://github.com/sylabs/wlm-operator), [SchedMD/slurm-k8s-bridge](https://gitlab.com/SchedMD/training/slurm-k8s-bridge), and [kalenpeterson/kube-slurm](https://github.com/kalenpeterson/kube-slurm). 
 > However, these projects are either strongly deprecated and did not pass our minimal functional test 
 > or aim at a different goal. Therefore, these projects are not included.
 
+We performed two rounds of evaluations.
+The first round covers the CPU, memory, storage, startup time, and network performance of the different projects.
+The second round covers only the network performance of the improved KSI implementation.
 In our evaluation we used the following benchmark tools to evaluate certain metrics:
 
 | Metric                | Benchmark        | Version       |
@@ -23,9 +28,14 @@ In our evaluation we used the following benchmark tools to evaluate certain metr
 | Network latency       | Netperf          | 2.7.1         |
 | Workload startup time | Our own approach | not versioned |
 
-> Unfortunately, the tool Nuttcp seems to have no package for CentOS Stream 9. 
-> Therefore, instead of compiling Nuttcp on our own, we simply use Iperf3 that serves the same functionality.
- 
+
+## First Evaluation
+
+This first round of evaluations reflects the work presented in the following paper:
+- [Running Kubernetes Workloads on Rootless HPC Systems using Slurm](https://www.thinkmind.org/library/CLOUD_COMPUTING/CLOUD_COMPUTING_2025/cloud_computing_2025_2_60_20036.html)
+
+And the master’s thesis of the same name:
+- [Running Kubernetes Workloads on Rootless HPC Systems using Slurm](https://doi.org/10.25625/GDFCFP)
 
 ## Content
 - Shell scripts in `src/benchmark/` to:
@@ -172,3 +182,72 @@ In the current state, we completed the following benchmarks on each project:
 
 ✅ = successfully completed
 💀 = error occurred / completion not possible
+
+## Second Evaluation
+
+This second round of evaluations reflects the work presented in the following paper:
+- TBD
+
+The focus of the second evaluation was to compare the network performance of various network drivers for rootless containers when used with KSI including:
+- [bypass4netns](https://github.com/rootless-containers/bypass4netns) with Nerdctl
+- [slirp4netns](https://github.com/rootless-containers/slirp4netns) with Nerdctl
+- [pasta](https://github.com/rootless-containers/pasta) with Podman
+- Baseline without containerization
+
+## Content
+- Shell scripts in `src2/benchmark/` to:
+  - run all benchmarks
+  - write benchmark results into `.csv` files
+- Python scripts in `src2/plot/` to:
+  - read the result files
+  - create plots
+- CSV result files in `data2/`
+- Log files in `logs2/`
+- Plot images in `plots2/`
+
+## Prerequisites
+To perform the evaluation, a certain prerequisites have to be ensured:
+- Compute node with [improved KSI](https://github.com/gwdg/pub-2025-ksi) installed
+- Rootless Nerdctl and Podman 5.x installed
+- Slirp4netns installed
+- Bypass4netns set up for Nerdctl
+- Recent version of Kind installed
+- Slurm cluster is not required
+- Separate compute node with fast network connection to the first compute node with netperf and iPerf3 installed
+
+### iPerf3 and Netperf
+The tools iPerf3 and Netperf operate in a client-server model. 
+Therefore, in this setup it is required that the server component is **started manually** on a second node in the Slurm cluster.
+
+In case of iPerf3 the server can be started by following command:
+```shell
+iperf3 -s -p 5003
+```
+
+For the Netperf server you can run:
+```shell
+netserver -D -p 16604
+```
+> `-D` to do not daemonize and `-p` to set port.
+
+
+## Getting Started
+This repository contains a script [main.sh](src2/benchmark/main.sh).
+This script is designed to be executed on the first compute node, which has KSI installed.
+
+```shell
+/bin/bash src2/benchmark/main.sh
+```
+After execution, the result file can be obtained in `data2/` and the log files in `logs2/`.
+
+The script automatically executes iperf3 and netperf benchmarks. 
+
+## Completed Benchmarks on Projects
+In the current state, we completed the following benchmarks on each project:
+
+|                               | Bypass4netns | Slirp4netns | Pasta | No containerization |
+|-------------------------------|--------------|-------------|-------|---------------------|
+| iPerf3 Network Throughput     | ✅            | ✅           | ✅     | ✅                   |
+| Netperf Network Latency (TCP) | ✅            | ✅           | ✅     | ✅                   |
+
+✅ = successfully completed

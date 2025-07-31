@@ -1,0 +1,64 @@
+cgroups v2 check passed: cgroups v2 is enabled
+kind version 0.30.0-alpha.21+cfdc05b51484c3
+● bypass4netnsd.service - bypass4netnsd (daemon for bypass4netns, accelerator for rootless containers)
+     Loaded: loaded (/home/ksi-user/.config/systemd/user/bypass4netnsd.service; enabled; preset: disabled)
+     Active: active (running) since Wed 2025-07-30 15:05:27 UTC; 2h 27min ago
+   Main PID: 47936 (bypass4netnsd)
+      Tasks: 6 (limit: 1223618)
+     Memory: 8.8M
+        CPU: 1min 18.396s
+     CGroup: /user.slice/user-1000.slice/user@1000.service/app.slice/bypass4netnsd.service
+             └─47936 /usr/local/bin/bypass4netnsd
+
+Jul 30 16:25:20 gcn1365 bypass4netnsd[47936]: time="2025-07-30T16:25:20Z" level=info msg="Terminated bypass4netns pid=400045" ID=3f5f6e2c99e1
+Jul 30 16:25:20 gcn1365 bypass4netnsd[47936]: time="2025-07-30T16:25:20Z" level=info msg="Stopped bypass" ID=3f5f6e2c99e1
+Jul 30 16:25:21 gcn1365 bypass4netnsd[47936]: time="2025-07-30T16:25:21Z" level=info msg="Starting bypass" ID=6a111bcac70d
+Jul 30 16:25:21 gcn1365 bypass4netnsd[47936]: time="2025-07-30T16:25:21Z" level=info msg="bypass4netns args:[--socket=/run/user/1000/bypass4netns/6a111bcac70d79b.sock --pid-file=/run/user/1000/bypass4netns/6a111bcac70d79b.pid --log-file=/home/ksi-user/.local/share/nerdctl/1935db59/containers/default/6a111bcac70d79bccbdccd8a8c0c1e4683ac964c72a976e9bf8a74252be00532/bypass4netns.log --ignore=127.0.0.0/8 --ignore=10.0.2.0/24 --ignore=auto --ignore-bind --com-socket=/run/user/1000/bypass4netnsd-com.sock --ready-fd=3]" ID=6a111bcac70d
+Jul 30 16:25:21 gcn1365 bypass4netnsd[47936]: time="2025-07-30T16:25:21Z" level=info msg="bypass4netns successfully started" ID=6a111bcac70d
+Jul 30 16:25:21 gcn1365 bypass4netnsd[47936]: time="2025-07-30T16:25:21Z" level=info msg="Started bypass" ID=6a111bcac70d
+Jul 30 16:26:44 gcn1365 bypass4netnsd[47936]: time="2025-07-30T16:26:44Z" level=info msg="Stopping bypass" ID=6a111bcac70d
+Jul 30 16:26:44 gcn1365 bypass4netnsd[47936]: time="2025-07-30T16:26:44Z" level=info msg="Terminating bypass4netns pid=416064" ID=6a111bcac70d
+Jul 30 16:26:44 gcn1365 bypass4netnsd[47936]: time="2025-07-30T16:26:44Z" level=info msg="Terminated bypass4netns pid=416064" ID=6a111bcac70d
+Jul 30 16:26:44 gcn1365 bypass4netnsd[47936]: time="2025-07-30T16:26:44Z" level=info msg="Stopped bypass" ID=6a111bcac70d
+[104m[97m[INFO][49m[39m Installed "bypass4netnsd.service" successfully.
+[104m[97m[INFO][49m[39m To control "bypass4netnsd.service", run: `systemctl --user (start|stop|restart) bypass4netnsd.service`
+[104m[97m[INFO][49m[39m To use bypass4netnsd, set the "nerdctl/bypass4netns=true" annotation on containers, e.g., `nerdctl run --annotation nerdctl/bypass4netns=true`
+nerdctl check passed
+kubectl check passed
+kind check passed
+Successfully read /etc/os-release
+K8S_PORT=30000
+Kind config:
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+- role: control-plane
+  extraMounts:
+  - hostPath: ./
+    containerPath: /app
+  extraPortMappings:
+    - containerPort: 30000
+      hostPort: 30000
+      # optional: set the bind address on the host
+      # 0.0.0.0 is the current default
+      listenAddress: "0.0.0.0"
+      # optional: set the protocol to one of TCP, UDP, SCTP.
+      # TCP is the default
+      protocol: TCP
+NAME                  STATUS   ROLES           AGE   VERSION
+f36fd-control-plane   Ready    control-plane   22s   v1.33.2
+Kubernetes control plane is running at https://127.0.0.1:39409
+CoreDNS is running at https://127.0.0.1:39409/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+
+To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
+serviceaccount/admin-user created
+clusterrolebinding.rbac.authorization.k8s.io/admin-user created
+Executing the Kubernetes workload script ./example-workloads/workload-netperf-latency-tcp.sh on cluster kind-f36fd
+namespace/bench created
+job.batch/netperf created
+job.batch/netperf condition met
+MIGRATED TCP REQUEST/RESPONSE TEST from 0.0.0.0 (0.0.0.0) port 0 AF_INET to 10.239.3.66 () port 0 AF_INET : demo : first burst 0
+Minimum Latency Microseconds,Maximum Latency Microseconds,Mean Latency Microseconds,Stddev Latency Microseconds
+57,2902,78.90,8.59
+namespace "bench" deleted
+Deleting Kind cluster container f36fd

@@ -1,0 +1,40 @@
+cgroups v2 check passed: cgroups v2 is enabled
+podman check passed
+kubectl check passed
+kind check passed
+Successfully read /etc/os-release
+K8S_PORT=30000
+Kind config:
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+- role: control-plane
+  extraMounts:
+  - hostPath: ./
+    containerPath: /app
+  extraPortMappings:
+    - containerPort: 30000
+      hostPort: 30000
+      # optional: set the bind address on the host
+      # 0.0.0.0 is the current default
+      listenAddress: "0.0.0.0"
+      # optional: set the protocol to one of TCP, UDP, SCTP.
+      # TCP is the default
+      protocol: TCP
+NAME                  STATUS   ROLES           AGE   VERSION
+4f0e1-control-plane   Ready    control-plane   22s   v1.33.2
+Kubernetes control plane is running at https://127.0.0.1:44437
+CoreDNS is running at https://127.0.0.1:44437/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+
+To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
+serviceaccount/admin-user created
+clusterrolebinding.rbac.authorization.k8s.io/admin-user created
+Executing the Kubernetes workload script ./example-workloads/workload-netperf-latency-tcp.sh on cluster kind-4f0e1
+namespace/bench created
+job.batch/netperf created
+job.batch/netperf condition met
+MIGRATED TCP REQUEST/RESPONSE TEST from 0.0.0.0 (0.0.0.0) port 0 AF_INET to 10.239.3.66 () port 0 AF_INET : demo : first burst 0
+Minimum Latency Microseconds,Maximum Latency Microseconds,Mean Latency Microseconds,Stddev Latency Microseconds
+55,395,73.41,3.34
+namespace "bench" deleted
+Deleting Kind cluster container 4f0e1
