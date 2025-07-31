@@ -5,6 +5,7 @@
 set -e # fail and abort script if one command fails
 set -o pipefail
 
+# Set IP of the second node here
 TEST_SERVER="10.239.3.66"
 export TEST_SERVER
 
@@ -77,13 +78,13 @@ if [ "$ONLY_PARSE" == "false" ]; then
   rm -rf data2/*
 
   for i in {01..10}; do netperf -H $TEST_SERVER -p 16604 -l 30 -t TCP_RR -- -r 200 -o min_latency,max_latency,mean_latency,stddev_latency > logs2/netperf-latency-tcp/baseline/$i.txt; done
-  for i in {01..10}; do ./run-workload.sh ./example-workloads/workload-netperf-latency-tcp.sh > logs2/netperf-latency-tcp/netperf/podman-pasta/$i.txt; done
-  for i in {01..10}; do ./run-workload-nerdctl.sh ./example-workloads/workload-netperf-latency-tcp.sh > logs2/netperf-latency-tcp/nerdctl-slirp4netns/$i.txt; done
-  for i in {01..10}; do ./run-workload-nerdctl.sh ./example-workloads/workload-netperf-latency-tcp.sh > logs2/netperf-latency-tcp/nerdctl-bypass4netns/$i.txt; done
+  for i in {01..10}; do ./run-workload.sh src2/benchmark/netperf-latency-tcp.sh > logs2/netperf-latency-tcp/netperf/podman-pasta/$i.txt; done
+  for i in {01..10}; do ./run-workload-nerdctl.sh src2/benchmark/netperf-latency-tcp.sh > logs2/netperf-latency-tcp/nerdctl-slirp4netns/$i.txt; done
+  for i in {01..10}; do ./run-workload-nerdctl.sh src2/benchmark/netperf-latency-tcp.sh > logs2/netperf-latency-tcp/nerdctl-bypass4netns/$i.txt; done
 
-  for i in {01..10}; do ./run-workload.sh example-workloads/workload-iperf3-bandwidth.sh 2>&1 > logs2/iperf3-bandwidth/podman-pasta/$i.txt; done
-  for i in {01..10}; do ./run-workload-nerdctl.sh example-workloads/workload-iperf3-bandwidth.sh 2>&1 > logs2/iperf3-bandwidth/iperf3/nerdctl-bypass4netns/$i.txt; done
-  for i in {01..10}; do ./run-workload-nerdctl.sh example-workloads/workload-iperf3-bandwidth.sh 2>&1 > logs2/iperf3-bandwidth/iperf3/nerdctl-bypass4netns/$i.txt; done
+  for i in {01..10}; do ./run-workload.sh src2/benchmark/iperf3-bandwidth.sh 2>&1 > logs2/iperf3-bandwidth/podman-pasta/$i.txt; done
+  for i in {01..10}; do ./run-workload-nerdctl.sh src2/benchmark/iperf3-bandwidth.sh 2>&1 > logs2/iperf3-bandwidth/iperf3/nerdctl-bypass4netns/$i.txt; done
+  for i in {01..10}; do ./run-workload-nerdctl.sh src2/benchmark/iperf3-bandwidth.sh 2>&1 > logs2/iperf3-bandwidth/iperf3/nerdctl-bypass4netns/$i.txt; done
   for i in {01..10}; do iperf3 --json -c $TEST_SERVER -p 5003 -i 1 -t 30 2>&1 > logs2/iperf3-bandwidth/iperf3/baseline/$i.txt; done
 fi
 

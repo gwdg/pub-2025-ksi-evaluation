@@ -34,7 +34,7 @@ chart = sns.barplot(data=df[["driver", "score"]], hue="driver",
                     palette=sns.color_palette(common.colors(len(benchmark_files))),
                     x="driver", y="score",
                     estimator=np.mean, errorbar='sd', capsize=.1, alpha=0.8)
-chart.set(xlabel='Integration Approach', ylabel='Throughput  [MBit/s]\nhigher is better')
+chart.set(xlabel='Driver', ylabel='Throughput  [MBit/s]\nhigher is better')
 
 for i in chart.containers:
     chart.bar_label(i, label_type="center", fmt="%.0f")

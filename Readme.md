@@ -230,6 +230,7 @@ netserver -D -p 16604
 ```
 > `-D` to do not daemonize and `-p` to set port.
 
+The IP address of the second compute node must be set in the [main.sh](src2/benchmark/main.sh) script under TEST_SERVER.
 
 ## Getting Started
 This repository contains a script [main.sh](src2/benchmark/main.sh).
