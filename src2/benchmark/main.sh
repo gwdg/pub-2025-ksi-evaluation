@@ -82,10 +82,10 @@ if [ "$ONLY_PARSE" == "false" ]; then
   mkdir -p logs2/netperf-latency-tcp/podman-pasta/
   mkdir -p logs2/netperf-latency-tcp/nerdctl-slirp4netns/
   mkdir -p logs2/netperf-latency-tcp/nerdctl-bypass4netns/
-  for i in {01..10}; do netperf -H $TEST_SERVER -p 16604 -l 30 -t TCP_RR -- -r 200 -o min_latency,max_latency,mean_latency,stddev_latency > logs2/netperf-latency-tcp/baseline/$i.txt; done
   for i in {01..10}; do ../ksi/run-workload-original.sh ../ksi-evaluation/src2/benchmark/netperf-latency-tcp.sh > logs2/netperf-latency-tcp/podman-pasta/$i.txt; done
   for i in {01..10}; do ../ksi/run-workload-no-liqo.sh ../ksi-evaluations/rc2/benchmark/netperf-latency-tcp.sh > logs2/netperf-latency-tcp/nerdctl-slirp4netns/$i.txt; done
   for i in {01..10}; do ../ksi/run-workload-no-liqo.sh ../ksi-evaluation/src2/benchmark/netperf-latency-tcp.sh > logs2/netperf-latency-tcp/nerdctl-bypass4netns/$i.txt; done
+  for i in {01..10}; do netperf -H $TEST_SERVER -p 16604 -l 30 -t TCP_RR -- -r 200 -o min_latency,max_latency,mean_latency,stddev_latency > logs2/netperf-latency-tcp/baseline/$i.txt; done
 
   mkdir -p logs2/iperf3-bandwidth/baseline/
   mkdir -p logs2/iperf3-bandwidth/podman-pasta/
