@@ -6,7 +6,7 @@ set -e # fail and abort script if one command fails
 set -o pipefail
 set -x
 
-# Set IP of the second node here
+# Set IP of the second node here and in the workload scripts
 TEST_SERVER="10.239.3.66"
 export TEST_SERVER
 

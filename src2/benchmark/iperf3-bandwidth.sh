@@ -23,7 +23,7 @@ spec:
         command: ["sh", "-c"]
         args:
         - |
-          iperf3 --json -c "10.254.1.27" -p 5003 -i 1 -t 30
+          iperf3 --json -c "10.239.3.66" -p 5003 -i 1 -t 30
       restartPolicy: Never
 EOF
 

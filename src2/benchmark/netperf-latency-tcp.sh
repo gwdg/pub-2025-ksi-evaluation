@@ -21,7 +21,7 @@ spec:
         command: ["sh", "-c"]
         args:
         - |
-          netperf -H "10.254.1.27" -p 16604 -l 30 -t TCP_RR -- -r 200 -o min_latency,max_latency,mean_latency,stddev_latency
+          netperf -H "10.239.3.66" -p 16604 -l 30 -t TCP_RR -- -r 200 -o min_latency,max_latency,mean_latency,stddev_latency
       restartPolicy: Never
 EOF
 
