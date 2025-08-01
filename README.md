@@ -208,6 +208,7 @@ The focus of the second evaluation was to compare the network performance of var
 ## Prerequisites
 To perform the evaluation, a certain prerequisites have to be ensured:
 - Compute node with [improved KSI](https://github.com/gwdg/pub-2025-ksi) installed
+- KSI should be available in the parent folder, e.g., `../ksi`
 - Rootless Nerdctl and Podman 5.x installed
 - Slirp4netns installed
 - Bypass4netns set up for Nerdctl
