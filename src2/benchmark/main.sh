@@ -83,18 +83,18 @@ if [ "$ONLY_PARSE" == "false" ]; then
   mkdir -p logs2/netperf-latency-tcp/nerdctl-slirp4netns/
   mkdir -p logs2/netperf-latency-tcp/nerdctl-bypass4netns/
   for i in {01..10}; do ../ksi/run-workload-original.sh src2/benchmark/netperf-latency-tcp.sh > logs2/netperf-latency-tcp/podman-pasta/$i.txt; done
-  for i in {01..10}; do ../ksi/run-workload-no-liqo.sh src2/benchmark/netperf-latency-tcp.sh > logs2/netperf-latency-tcp/nerdctl-slirp4netns/$i.txt; done
-  for i in {01..10}; do ../ksi/run-workload-no-liqo.sh src2/benchmark/netperf-latency-tcp.sh > logs2/netperf-latency-tcp/nerdctl-bypass4netns/$i.txt; done
+  for i in {01..10}; do ../ksi/run-workload-no-liqo.sh src2/benchmark/netperf-latency-tcp.sh "$PWD" > logs2/netperf-latency-tcp/nerdctl-slirp4netns/$i.txt; done
+  for i in {01..10}; do ../ksi/run-workload-no-liqo.sh src2/benchmark/netperf-latency-tcp.sh "$PWD" > logs2/netperf-latency-tcp/nerdctl-bypass4netns/$i.txt; done
   for i in {01..10}; do netperf -H $TEST_SERVER -p 16604 -l 30 -t TCP_RR -- -r 200 -o min_latency,max_latency,mean_latency,stddev_latency > logs2/netperf-latency-tcp/baseline/$i.txt; done
 
   mkdir -p logs2/iperf3-bandwidth/baseline/
   mkdir -p logs2/iperf3-bandwidth/podman-pasta/
-  mkdir -p logs2/iperf3-bandwidth/iperf3/nerdctl-bypass4netns/
-  mkdir -p logs2/iperf3-bandwidth/iperf3/nerdctl-slirp4netns/
+  mkdir -p logs2/iperf3-bandwidth/nerdctl-bypass4netns/
+  mkdir -p logs2/iperf3-bandwidth/nerdctl-slirp4netns/
   for i in {01..10}; do ../ksi/run-workload-original.sh src2/benchmark/iperf3-bandwidth.sh 2>&1 > logs2/iperf3-bandwidth/podman-pasta/$i.txt; done
-  for i in {01..10}; do ../ksi/run-workload-no-liqo.sh src2/benchmark/iperf3-bandwidth.sh 2>&1 > logs2/iperf3-bandwidth/iperf3/nerdctl-bypass4netns/$i.txt; done
-  for i in {01..10}; do ../ksi/run-workload-no-liqo.sh src2/benchmark/iperf3-bandwidth.sh 2>&1 > logs2/iperf3-bandwidth/iperf3/nerdctl-bypass4netns/$i.txt; done
-  for i in {01..10}; do iperf3 --json -c $TEST_SERVER -p 5003 -i 1 -t 30 2>&1 > logs2/iperf3-bandwidth/iperf3/baseline/$i.txt; done
+  for i in {01..10}; do ../ksi/run-workload-no-liqo.sh src2/benchmark/iperf3-bandwidth.sh "$PWD" 2>&1 > logs2/iperf3-bandwidth/nerdctl-bypass4netns/$i.txt; done
+  for i in {01..10}; do ../ksi/run-workload-no-liqo.sh src2/benchmark/iperf3-bandwidth.sh "$PWD" 2>&1 > logs2/iperf3-bandwidth/nerdctl-bypass4netns/$i.txt; done
+  for i in {01..10}; do iperf3 --json -c $TEST_SERVER -p 5003 -i 1 -t 30 2>&1 > logs2/iperf3-bandwidth/baseline/$i.txt; done
 fi
 
 drivers=("podman-pasta" "nerdctl-bypass4netns" "nerdctl-slirp4netns" "baseline")
