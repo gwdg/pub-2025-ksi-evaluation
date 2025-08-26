@@ -36,7 +36,7 @@ chartRead = sns.barplot(ax=axes[0], data=df[["project", "readthroughput"]], hue=
                         palette=sns.color_palette(common.colors(len(benchmark_files))),
                         x="project", y="readthroughput",
                         estimator=np.mean, errorbar='sd', capsize=.1, alpha=0.8)
-chartRead.set(xlabel='Integration Approach', ylabel='Throughput  [MiB/s]\nhigher is better', title="Read")
+chartRead.set(xlabel='Integration Approach', ylabel='Throughput in MiB/s\nhigher is better', title="Read")
 
 for i in chartRead.containers:
     chartRead.bar_label(i, label_type="center", fmt="%.0f")
@@ -47,7 +47,7 @@ chartWrite = sns.barplot(ax=axes[1], data=df[["project", "writethroughput"]], hu
                          x="project", y="writethroughput",
                          estimator=np.mean, errorbar='sd', capsize=.1, alpha=0.8)
 
-chartWrite.set(xlabel='Integration Approach', ylabel='Throughput  [MiB/s]\nhigher is better', title="Write")
+chartWrite.set(xlabel='Integration Approach', ylabel='Throughput in MiB/s\nhigher is better', title="Write")
 
 for i in chartWrite.containers:
     chartWrite.bar_label(i, label_type="center", fmt="%.0f")

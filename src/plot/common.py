@@ -1,7 +1,7 @@
 # Shared functionality that is used in multiple python scripts.
 
 _mapNames = {
-    "slurm": "bare metal",
+    "slurm": "Bare Metal",
     "ksi": "KSI",
     "hpk": "HPK",
     "bridge-operator": "Bridge-Operator"

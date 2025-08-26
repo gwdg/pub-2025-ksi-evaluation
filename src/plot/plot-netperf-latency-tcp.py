@@ -34,7 +34,7 @@ chart = sns.barplot(data=df[["project", "mean_latency"]], hue="project",
                     palette=sns.color_palette(common.colors(len(benchmark_files))),
                     x="project", y="mean_latency",
                     estimator=np.mean, errorbar='sd', capsize=.1, alpha=0.8)
-chart.set(xlabel='Integration Approach', ylabel='Latency  [microseconds]\nlower is better')
+chart.set(xlabel='Integration Approach', ylabel='Latency in ms\nlower is better')
 
 for i in chart.containers:
     chart.bar_label(i, label_type="center", fmt="%.0f")
